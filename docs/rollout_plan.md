@@ -24,6 +24,7 @@ Messenger -> Servers -> Voice -> Video
 - Add node js + media soup docker service for SFU media routing
 - Add node js + websockets docker service for signaling
 - Vue client uses WebRTC to forward their audio stream to mediasoup
+  - https://www.youtube.com/watch?v=DOe7GkQgwPo I liked this resource that goes into detail on the process flow
 
 # Video
 
