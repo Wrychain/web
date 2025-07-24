@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Caspnetti.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250724085422_added_messenger_and_chain_entities")]
+    [Migration("20250724090429_added_messenger_and_chain_entities")]
     partial class added_messenger_and_chain_entities
     {
         /// <inheritdoc />

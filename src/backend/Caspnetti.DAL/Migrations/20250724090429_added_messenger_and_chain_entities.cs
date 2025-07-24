@@ -11,6 +11,76 @@ namespace Caspnetti.DAL.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.RenameColumn(
+                name: "Username",
+                table: "Users",
+                newName: "DisplayName");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Email",
+                table: "Users",
+                type: "nvarchar(450)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "ChainId",
+                table: "Users",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "CreatedAt",
+                table: "Users",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<int>(
+                name: "Role",
+                table: "Users",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "ThreadId",
+                table: "Users",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "UserId",
+                table: "Users",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "Chains",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chains", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Chains_Users_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateTable(
                 name: "FilePointers",
                 columns: table => new
@@ -30,19 +100,50 @@ namespace Caspnetti.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chains",
+                name: "Notifications",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<int>(type: "int", nullable: false)
+                    ReadAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chains", x => x.Id);
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSessions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IPAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    TokenHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSessions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserSessions_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -73,56 +174,28 @@ namespace Caspnetti.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MessageAttachments",
+                name: "Threads",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FilePointerId = table.Column<int>(type: "int", nullable: true),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
-                    MessageId = table.Column<int>(type: "int", nullable: true)
+                    ThreadType = table.Column<int>(type: "int", nullable: false),
+                    CreatorId = table.Column<int>(type: "int", nullable: true),
+                    ChainId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MessageAttachments", x => x.Id);
+                    table.PrimaryKey("PK_Threads", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MessageAttachments_FilePointers_FilePointerId",
-                        column: x => x.FilePointerId,
-                        principalTable: "FilePointers",
+                        name: "FK_Threads_Chains_ChainId",
+                        column: x => x.ChainId,
+                        principalTable: "Chains",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MessageReactions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Reaction = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    FromId = table.Column<int>(type: "int", nullable: true),
-                    MessageId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MessageReactions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MessageReceipts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ById = table.Column<int>(type: "int", nullable: true),
-                    MessageId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MessageReceipts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Threads_Users_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -140,23 +213,16 @@ namespace Caspnetti.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Notifications",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReadAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Threads_ThreadId",
+                        column: x => x.ThreadId,
+                        principalTable: "Threads",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -177,6 +243,11 @@ namespace Caspnetti.DAL.Migrations
                         column: x => x.MeshId,
                         principalTable: "Meshes",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ThreadOrderings_Threads_ThreadId",
+                        column: x => x.ThreadId,
+                        principalTable: "Threads",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -194,6 +265,99 @@ namespace Caspnetti.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ThreadPresences", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ThreadPresences_Threads_ThreadId",
+                        column: x => x.ThreadId,
+                        principalTable: "Threads",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ThreadPresences_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessageAttachments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FilePointerId = table.Column<int>(type: "int", nullable: true),
+                    AuthorId = table.Column<int>(type: "int", nullable: true),
+                    MessageId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageAttachments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessageAttachments_FilePointers_FilePointerId",
+                        column: x => x.FilePointerId,
+                        principalTable: "FilePointers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MessageAttachments_Messages_MessageId",
+                        column: x => x.MessageId,
+                        principalTable: "Messages",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MessageAttachments_Users_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessageReactions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Reaction = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FromId = table.Column<int>(type: "int", nullable: true),
+                    MessageId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageReactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessageReactions_Messages_MessageId",
+                        column: x => x.MessageId,
+                        principalTable: "Messages",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MessageReactions_Users_FromId",
+                        column: x => x.FromId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessageReceipts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ById = table.Column<int>(type: "int", nullable: true),
+                    MessageId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageReceipts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessageReceipts_Messages_MessageId",
+                        column: x => x.MessageId,
+                        principalTable: "Messages",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MessageReceipts_Users_ById",
+                        column: x => x.ById,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -215,87 +379,39 @@ namespace Caspnetti.DAL.Migrations
                         column: x => x.LastReadMessageId,
                         principalTable: "Messages",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Threads",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ThreadType = table.Column<int>(type: "int", nullable: false),
-                    CreatorId = table.Column<int>(type: "int", nullable: true),
-                    ChainId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Threads", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Threads_Chains_ChainId",
-                        column: x => x.ChainId,
-                        principalTable: "Chains",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: true),
-                    ChainId = table.Column<int>(type: "int", nullable: true),
-                    ThreadId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Chains_ChainId",
-                        column: x => x.ChainId,
-                        principalTable: "Chains",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Users_Threads_ThreadId",
+                        name: "FK_ThreadProgresses_Threads_ThreadId",
                         column: x => x.ThreadId,
                         principalTable: "Threads",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Users_Users_UserId",
+                        name: "FK_ThreadProgresses_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "UserSessions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IPAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    TokenHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserSessions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserSessions_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_ChainId",
+                table: "Users",
+                column: "ChainId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_ThreadId",
+                table: "Users",
+                column: "ThreadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserId",
+                table: "Users",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Chains_CreatorId",
@@ -426,142 +542,28 @@ namespace Caspnetti.DAL.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_ChainId",
-                table: "Users",
-                column: "ChainId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
-                column: "Email",
-                unique: true,
-                filter: "[Email] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_ThreadId",
-                table: "Users",
-                column: "ThreadId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UserId",
-                table: "Users",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserSessions_UserId",
                 table: "UserSessions",
                 column: "UserId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Chains_Users_CreatorId",
-                table: "Chains",
-                column: "CreatorId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_MessageAttachments_Messages_MessageId",
-                table: "MessageAttachments",
-                column: "MessageId",
-                principalTable: "Messages",
+                name: "FK_Users_Chains_ChainId",
+                table: "Users",
+                column: "ChainId",
+                principalTable: "Chains",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_MessageAttachments_Users_AuthorId",
-                table: "MessageAttachments",
-                column: "AuthorId",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_MessageReactions_Messages_MessageId",
-                table: "MessageReactions",
-                column: "MessageId",
-                principalTable: "Messages",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_MessageReactions_Users_FromId",
-                table: "MessageReactions",
-                column: "FromId",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_MessageReceipts_Messages_MessageId",
-                table: "MessageReceipts",
-                column: "MessageId",
-                principalTable: "Messages",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_MessageReceipts_Users_ById",
-                table: "MessageReceipts",
-                column: "ById",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Messages_Threads_ThreadId",
-                table: "Messages",
+                name: "FK_Users_Threads_ThreadId",
+                table: "Users",
                 column: "ThreadId",
                 principalTable: "Threads",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Messages_Users_AuthorId",
-                table: "Messages",
-                column: "AuthorId",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Notifications_Users_UserId",
-                table: "Notifications",
+                name: "FK_Users_Users_UserId",
+                table: "Users",
                 column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ThreadOrderings_Threads_ThreadId",
-                table: "ThreadOrderings",
-                column: "ThreadId",
-                principalTable: "Threads",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ThreadPresences_Threads_ThreadId",
-                table: "ThreadPresences",
-                column: "ThreadId",
-                principalTable: "Threads",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ThreadPresences_Users_UserId",
-                table: "ThreadPresences",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ThreadProgresses_Threads_ThreadId",
-                table: "ThreadProgresses",
-                column: "ThreadId",
-                principalTable: "Threads",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ThreadProgresses_Users_UserId",
-                table: "ThreadProgresses",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Threads_Users_CreatorId",
-                table: "Threads",
-                column: "CreatorId",
                 principalTable: "Users",
                 principalColumn: "Id");
         }
@@ -570,12 +572,16 @@ namespace Caspnetti.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Chains_Users_CreatorId",
-                table: "Chains");
+                name: "FK_Users_Chains_ChainId",
+                table: "Users");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Threads_Users_CreatorId",
-                table: "Threads");
+                name: "FK_Users_Threads_ThreadId",
+                table: "Users");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Users_Users_UserId",
+                table: "Users");
 
             migrationBuilder.DropTable(
                 name: "MessageAttachments");
@@ -611,13 +617,73 @@ namespace Caspnetti.DAL.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Threads");
 
             migrationBuilder.DropTable(
                 name: "Chains");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_ChainId",
+                table: "Users");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_Email",
+                table: "Users");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_ThreadId",
+                table: "Users");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_UserId",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "ChainId",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "CreatedAt",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "Role",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "ThreadId",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "UserId",
+                table: "Users");
+
+            migrationBuilder.RenameColumn(
+                name: "DisplayName",
+                table: "Users",
+                newName: "Username");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Email",
+                table: "Users",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(450)",
+                oldNullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                });
         }
     }
 }
