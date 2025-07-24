@@ -10,4 +10,10 @@ public class MessageReaction: IEntity
     public DateTime? CreatedAt { get; set; }
 
     public virtual User? From { get; set; }
+
+    public MessageReaction()
+    {
+        var currentTime = DateTime.Now;
+        this.CreatedAt = currentTime;
+    }
 }

@@ -14,4 +14,11 @@ public class Message: IEntity
     public virtual ICollection<MessageAttachment>? Attachments { get; set; }
     public virtual ICollection<MessageReaction>? Reactions { get; set; }
     public virtual ICollection<MessageReceipt>? Receipts { get; set; }
+
+    public Message()
+    {
+        var currentTime = DateTime.Now;
+        this.CreatedAt = currentTime;
+        this.UpdatedAt = currentTime;
+    }
 }

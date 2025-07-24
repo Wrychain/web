@@ -1,1 +1,0 @@
-# Direct or group enum
