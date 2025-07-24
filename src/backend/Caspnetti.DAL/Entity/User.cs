@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Caspnetti.DAL.Enum;
 
 namespace Caspnetti.DAL.Entity;
 
@@ -12,6 +13,7 @@ public class User: IEntity
     public string? DisplayName { get; set; }
     public string? Password { get; set; }
     public DateTime CreatedAt { get; set; }
+    public Role? Role { get; set; }
 
     public virtual ICollection<UserSession>? Sessions { get; set; }
     public virtual ICollection<User>? Friends { get; set; }

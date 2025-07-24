@@ -5,10 +5,10 @@ using Caspnetti.DAL.Enum;
 
 namespace Caspnetti.DAL.Entity;
 
-[Table("Files")]
+[Table("FilePointers")]
 [Index(nameof(GeneratedFilename), IsUnique = true)]
 [Index(nameof(Path), IsUnique = true)]
-public class File: IEntity
+public class FilePointer: IEntity
 {
     public int Id { get; set; }
     public string? OriginalFilename { get; set; }
@@ -18,7 +18,7 @@ public class File: IEntity
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
-    public File()
+    public FilePointer()
     {
         var currentTime = DateTime.Now;
         this.CreatedAt = currentTime;

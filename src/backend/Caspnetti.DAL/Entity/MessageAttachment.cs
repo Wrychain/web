@@ -9,7 +9,7 @@ public class MessageAttachment: IEntity
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
-    public virtual File? File { get; set; }
+    public virtual FilePointer? FilePointer { get; set; }
     public virtual User? Author { get; set; }
 
     public MessageAttachment()
