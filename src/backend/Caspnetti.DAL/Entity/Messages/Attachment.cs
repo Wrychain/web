@@ -3,25 +3,21 @@ using Caspnetti.DAL.Entity.Users;
 
 namespace Caspnetti.DAL.Entity.Messages;
 
+// Attachment is created, added to a new Message, Message is created
 public class Attachment: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public required int AuthorId { get; set; }
+    public required int FilePointerId { get; set; }
+    public int? MessageId { get; set; }
 
-    public int MessageId { get; set; }
-    public required Message Message { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-    public int FilePointerId { get; set; }
-    public required FilePointer FilePointer { get; set; }
-
-    public int? AuthorId { get; set; }
+    // Navigation
+    public Message? Message { get; set; }
+    public FilePointer? FilePointer { get; set; }
     public User? Author { get; set; }
-
-    public Attachment()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-        this.UpdatedAt = currentTime;
-    }
 }

@@ -36,6 +36,9 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<int>("CreatorId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -94,6 +97,9 @@ namespace Caspnetti.DAL.Migrations
 
                     b.Property<int>("CreatorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -230,6 +236,9 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<int>("FeedId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LastMessageReadId")
                         .HasColumnType("int");
 
@@ -265,6 +274,9 @@ namespace Caspnetti.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("NotificationId")
                         .HasColumnType("int");
 
@@ -296,13 +308,16 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FeedId")
+                    b.Property<int>("FeedId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReceiverId")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ReceiverId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SenderId")
+                    b.Property<int>("SenderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -329,6 +344,9 @@ namespace Caspnetti.DAL.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ReceiverId")
                         .HasColumnType("int");
@@ -359,8 +377,18 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SenderId")
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SenderId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -383,13 +411,16 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ReceiverId")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ReceiverId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SenderId")
+                    b.Property<int>("SenderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StationId")
+                    b.Property<int>("StationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -414,7 +445,7 @@ namespace Caspnetti.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AuthorId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -423,7 +454,7 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<int>("FilePointerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MessageId")
+                    b.Property<int?>("MessageId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -448,16 +479,19 @@ namespace Caspnetti.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AuthorId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -475,16 +509,17 @@ namespace Caspnetti.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FromId")
+                    b.Property<int>("FromId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MessageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -509,9 +544,6 @@ namespace Caspnetti.DAL.Migrations
 
                     b.Property<int>("MessageId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("ReadAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -538,6 +570,9 @@ namespace Caspnetti.DAL.Migrations
 
                     b.Property<int>("CreatorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -567,6 +602,9 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("SortIndex")
                         .HasColumnType("int");
 
@@ -576,7 +614,7 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -727,6 +765,7 @@ namespace Caspnetti.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("TokenHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -735,7 +774,7 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<string>("UserAgent")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -772,7 +811,10 @@ namespace Caspnetti.DAL.Migrations
                     b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ReadAt")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ReadAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("Renotify")
@@ -825,6 +867,7 @@ namespace Caspnetti.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -834,12 +877,14 @@ namespace Caspnetti.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -864,6 +909,9 @@ namespace Caspnetti.DAL.Migrations
 
                     b.Property<int>("FriendId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -910,13 +958,13 @@ namespace Caspnetti.DAL.Migrations
 
             modelBuilder.Entity("StationUser", b =>
                 {
-                    b.Property<int>("MemberStationsId")
+                    b.Property<int>("JoinedStationsId")
                         .HasColumnType("int");
 
                     b.Property<int>("MembersId")
                         .HasColumnType("int");
 
-                    b.HasKey("MemberStationsId", "MembersId");
+                    b.HasKey("JoinedStationsId", "MembersId");
 
                     b.HasIndex("MembersId");
 
@@ -928,7 +976,7 @@ namespace Caspnetti.DAL.Migrations
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Stations.Station", "Station")
@@ -1071,15 +1119,21 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Feeds.Feed", "Feed")
                         .WithMany()
-                        .HasForeignKey("FeedId");
+                        .HasForeignKey("FeedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId");
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Feed");
 
@@ -1111,7 +1165,9 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Sender");
                 });
@@ -1120,15 +1176,21 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId");
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Stations.Station", "Station")
-                        .WithMany()
-                        .HasForeignKey("StationId");
+                        .WithMany("StationInvites")
+                        .HasForeignKey("StationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Receiver");
 
@@ -1141,7 +1203,9 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Files.FilePointer", "FilePointer")
                         .WithMany()
@@ -1151,9 +1215,7 @@ namespace Caspnetti.DAL.Migrations
 
                     b.HasOne("Caspnetti.DAL.Entity.Messages.Message", "Message")
                         .WithMany("Attachments")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MessageId");
 
                     b.Navigation("Author");
 
@@ -1166,7 +1228,9 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Author");
                 });
@@ -1175,7 +1239,9 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "From")
                         .WithMany()
-                        .HasForeignKey("FromId");
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Messages.Message", null)
                         .WithMany("Reactions")
@@ -1230,7 +1296,9 @@ namespace Caspnetti.DAL.Migrations
 
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Channel");
 
@@ -1267,7 +1335,7 @@ namespace Caspnetti.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("Caspnetti.DAL.Entity.Stations.Station", "Station")
-                        .WithMany("StationFeeds")
+                        .WithMany("GlobalFeeds")
                         .HasForeignKey("StationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1307,7 +1375,9 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Users.User", "User")
                         .WithMany("LoginSessions")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -1378,7 +1448,7 @@ namespace Caspnetti.DAL.Migrations
                 {
                     b.HasOne("Caspnetti.DAL.Entity.Stations.Station", null)
                         .WithMany()
-                        .HasForeignKey("MemberStationsId")
+                        .HasForeignKey("JoinedStationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1420,7 +1490,9 @@ namespace Caspnetti.DAL.Migrations
 
                     b.Navigation("DefaultChannels");
 
-                    b.Navigation("StationFeeds");
+                    b.Navigation("GlobalFeeds");
+
+                    b.Navigation("StationInvites");
 
                     b.Navigation("UserSettings");
                 });

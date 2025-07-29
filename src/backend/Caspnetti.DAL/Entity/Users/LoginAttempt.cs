@@ -2,11 +2,9 @@ namespace Caspnetti.DAL.Entity.Users;
 
 public class LoginAttempt: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
 
-    public LoginAttempt()
-    {
-        this.CreatedAt = DateTime.Now;
-    }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 }

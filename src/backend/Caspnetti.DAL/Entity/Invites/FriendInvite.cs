@@ -4,19 +4,17 @@ namespace Caspnetti.DAL.Entity.Invites;
 
 public class FriendInvite: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public required int SenderId { get; set; }
+    public required int ReceiverId { get; set; }
 
-    public int SenderId { get; set; }
-    public required User Sender { get; set; }
-    public int ReceiverId { get; set; }
-    public required User Receiver { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public bool IsActive { get; set; } = true;
 
-    public FriendInvite()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-        this.UpdatedAt = currentTime;
-    }
+    // Navigation
+    public User? Sender { get; set; }
+    public User? Receiver { get; set; }
 }

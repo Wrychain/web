@@ -4,14 +4,14 @@ namespace Caspnetti.DAL.Entity.Users;
 
 public class UserConnection: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public required int FriendId { get; set; }
 
-    public int FriendId { get; set; }
-    public required User Friend { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public bool IsActive { get; set; } = true;
 
-    public UserConnection()
-    {
-        this.CreatedAt = DateTime.Now;
-    }
+    // Navigation
+    public User? Friend { get; set; }
 }

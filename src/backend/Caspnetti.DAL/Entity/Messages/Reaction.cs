@@ -4,17 +4,14 @@ namespace Caspnetti.DAL.Entity.Messages;
 
 public class Reaction: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime? CreatedAt { get; set; }
+    public required int FromId { get; set; }
+    public required string Text { get; set; }
 
-    public string? Text { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-    public int? FromId { get; set; }
+    // Navigation
     public User? From { get; set; }
-
-    public Reaction()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-    }
 }

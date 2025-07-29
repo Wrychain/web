@@ -3,27 +3,23 @@ using Caspnetti.DAL.Entity.Users;
 
 namespace Caspnetti.DAL.Entity.Stations;
 
+// StationCustomChannel is created after Channel to link via Station::CustomChannels
 public class StationCustomChannel: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public required int SortIndex { get; set; }
+    public required int UserId { get; set; }
+    public required int StationId { get; set; }
+    public required int ChannelId { get; set; }
 
-    public int SortIndex { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public bool IsActive { get; set; } = true;
 
-    public int StationId { get; set; }
-    public required Station Station { get; set; }
-
-    public int? UserId { get; set; }
-    public required User? User { get; set; }
-
-    public int ChannelId { get; set; }
-    public required Channel Channel { get; set; }
-
-    public StationCustomChannel()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-        this.UpdatedAt = currentTime;
-    }
+    // Navigation
+    public User? User { get; set; }
+    public Station? Station { get; set; }
+    public Channel? Channel { get; set; }
 }

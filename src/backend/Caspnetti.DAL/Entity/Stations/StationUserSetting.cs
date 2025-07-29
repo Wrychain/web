@@ -4,26 +4,19 @@ namespace Caspnetti.DAL.Entity.Stations;
 
 public class StationUserSetting: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-
     public required string Name { get; set; }
     public required string Value { get; set; }
-    public bool IsActive { get; set; }
+    public required int UserId { get; set; }
+    public required int StationId { get; set; }
 
-    public int StationId { get; set; }
-    public required Station Station { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public bool IsActive { get; set; } = true;
 
-    public int UserId { get; set; }
-    public required User User { get; set;}
-
-    public StationUserSetting()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-        this.UpdatedAt = currentTime;
-
-        this.IsActive = true;
-    }
+    // Navigation
+    public Station? Station { get; set; }
+    public User? User { get; set;}
 }

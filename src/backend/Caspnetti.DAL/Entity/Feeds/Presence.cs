@@ -6,24 +6,18 @@ namespace Caspnetti.DAL.Entity.Feeds;
 
 public class Presence: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public required int FeedId { get; set; }
+    public required int UserId { get; set; }
+    public required PresenceAction Action { get; set; }
 
-    public int FeedId { get; set; }
-    public required Feed Feed { get; set; }
-    public int UserId { get; set; }
-    public required User User { get; set; }
-    public PresenceAction Action { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public bool IsActive { get; set; } = true;
 
-    public bool IsActive { get; set; }
-
-    public Presence()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-        this.UpdatedAt = currentTime;
-
-        this.IsActive = true;
-    }
+    // Navigation
+    public Feed? Feed { get; set; }
+    public User? User { get; set; }
 }

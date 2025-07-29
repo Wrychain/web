@@ -2,21 +2,18 @@ using Caspnetti.DAL.Entity.Users;
 
 namespace Caspnetti.DAL.Entity.Messages;
 
+// User views an existing message, creates this receipt, and adds it to the message context
 public class Receipt: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime? CreatedAt { get; set; }
-    public DateTime? ReadAt { get; set; }
+    public required int UserId { get; set; }
+    public required int MessageId { get; set; }
 
-    public int UserId { get; set; }
-    public required User User { get; set; }
+    // Meta
+    public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
-    public int MessageId { get; set; }
-    public required Message Message { get; set; }
-
-    public Receipt()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-    }
+    // Navigation
+    public User? User { get; set; }
+    public Message? Message { get; set; }
 }

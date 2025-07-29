@@ -1,27 +1,22 @@
 namespace Caspnetti.DAL.Entity.Users;
 
+// Created when an email/2FA token is sent/expected from user.
+// IsActive updated with successful TokenHash validation.
 public class LoginSession: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public DateTime? ExpiresAt { get; set; }
-
+    public required int UserId { get; set; }
+    public required string TokenHash { get; set; }
     public string? IPAddress { get; set; }
     public string? UserAgent { get; set; }
-    public string? TokenHash { get; set; }
 
-    public bool IsActive { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public DateTime? ExpiresAt { get; set; } = DateTime.Now.AddDays(7);
+    public bool IsActive { get; set; } = false;
 
-    public int? UserId { get; set; }
+    // Navigation
     public User? User { get; set; }
-
-    public LoginSession()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-        this.UpdatedAt = currentTime;
-
-        this.IsActive = false;
-    }
 }

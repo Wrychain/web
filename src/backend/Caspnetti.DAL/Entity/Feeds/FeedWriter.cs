@@ -4,21 +4,17 @@ namespace Caspnetti.DAL.Entity.Feeds;
 
 public class FeedWriter: IEntity
 {
+    // Main
     public int Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public required int UserId { get; set; }
+    public required int FeedId { get; set; }
 
-    public int UserId { get; set; }
-    public required User User { get; set; }
-    public int FeedId { get; set; }
-    public required Feed Feed { get; set; }
+    // Meta
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public bool IsActive { get; set; } = true;
 
-    public bool IsActive { get; set; }
-
-    public FeedWriter()
-    {
-        var currentTime = DateTime.Now;
-        this.CreatedAt = currentTime;
-        this.UpdatedAt = currentTime;
-    }
+    // Navigation
+    public User? User { get; set; }
+    public Feed? Feed { get; set; }
 }

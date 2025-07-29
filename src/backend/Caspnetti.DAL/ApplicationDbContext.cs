@@ -101,6 +101,36 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Station>()
             .HasMany(station => station.Members)
-            .WithMany(user => user.MemberStations);
+            .WithMany(user => user.JoinedStations);
+
+        modelBuilder.Entity<FeedInvite>()
+            .HasOne(feedInvite => feedInvite.Sender)
+            .WithMany()
+            .HasForeignKey(feedInvite => feedInvite.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<FeedInvite>()
+            .HasOne(feedInvite => feedInvite.Receiver)
+            .WithMany()
+            .HasForeignKey(feedInvite => feedInvite.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Message>()
+            .HasOne(message => message.Author)
+            .WithMany()
+            .HasForeignKey(message => message.AuthorId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<StationInvite>()
+            .HasOne(stationInvite => stationInvite.Sender)
+            .WithMany()
+            .HasForeignKey(stationInvite => stationInvite.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Channel>()
+            .HasOne(channel => channel.Creator)
+            .WithMany()
+            .HasForeignKey(channel => channel.CreatorId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

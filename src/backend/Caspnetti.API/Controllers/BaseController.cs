@@ -10,7 +10,7 @@ public class BaseController<TRepo, TEntity> : ControllerBase
 where TRepo : IRepository<TEntity>
 where TEntity : class, IEntity
 {
-    private readonly TRepo _repository;
+    protected readonly TRepo _repository;
 
     public BaseController(TRepo repository)
     {
@@ -18,19 +18,19 @@ where TEntity : class, IEntity
     }
 
     [HttpGet]
-    public IEnumerable<TEntity> Index()
+    public virtual IEnumerable<TEntity> Index()
     {
         return _repository.FindAll();
     }
 
     [HttpGet("{id}")]
-    public TEntity? Show(int id)
+    public virtual TEntity? Show(int id)
     {
         return _repository.FindOneBy(e => e.Id == id);
     }
 
     [HttpPost]
-    public int? Create([FromBody] TEntity newEntity)
+    public virtual int? Create([FromBody] TEntity newEntity)
     {
         _repository.Add(newEntity);
         _repository.Save();
@@ -38,7 +38,7 @@ where TEntity : class, IEntity
     }
 
     [HttpPut("{id}")]
-    public bool Update(int id, [FromBody] TEntity updatedEntity)
+    public virtual bool Update(int id, [FromBody] TEntity updatedEntity)
     {
         var existing = _repository.FindOneBy(e => e.Id == id);
         if (existing == null)
@@ -52,7 +52,7 @@ where TEntity : class, IEntity
     }
 
     [HttpDelete("{id}")]
-    public bool Delete(int id)
+    public virtual bool Delete(int id)
     {
         var existing = _repository.FindOneBy(e => e.Id == id);
         if (existing == null)
