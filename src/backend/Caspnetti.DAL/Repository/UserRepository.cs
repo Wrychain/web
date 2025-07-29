@@ -1,4 +1,4 @@
-using Caspnetti.DAL.Entity;
+using Caspnetti.DAL.Entity.Users;
 
 namespace Caspnetti.DAL.Repository;
 
