@@ -1,5 +1,5 @@
+using Caspnetti.DAL.Entity.Users;
 using Caspnetti.DAL.Repository;
-using Caspnetti.DAL.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Caspnetti.API.Controllers;

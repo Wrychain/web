@@ -1,0 +1,2 @@
+- Do not put a moving gradient as the end of stream background. Discord is dumb.
+- Autopause gifs on unfocus

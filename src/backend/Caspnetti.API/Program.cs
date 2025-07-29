@@ -9,7 +9,8 @@ var MSSQLConnection = builder.Configuration.GetConnectionString("MSSQLConnection
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(MSSQLConnection));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+// builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<StationRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 

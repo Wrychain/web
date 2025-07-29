@@ -2,9 +2,9 @@
 
 namespace Caspnetti.DAL.Enum;
 
-public enum ThreadPresenceAction
+public enum PresenceAction
 {
     Viewed = 0,
     Typing = 1,
-    Closed = 2
+    AFK = 2
 }
