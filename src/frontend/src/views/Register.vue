@@ -105,5 +105,4 @@ function registerSubmit() {
 {
   background-color:#000 !important;
 }
-
 </style>
