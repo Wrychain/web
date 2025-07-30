@@ -114,19 +114,19 @@ public class ApplicationDbContext : DbContext
             .WithMany()
             .HasForeignKey(feedInvite => feedInvite.ReceiverId)
             .OnDelete(DeleteBehavior.Restrict);
-        
+
         modelBuilder.Entity<Message>()
             .HasOne(message => message.Author)
             .WithMany()
             .HasForeignKey(message => message.AuthorId)
             .OnDelete(DeleteBehavior.Restrict);
-        
+
         modelBuilder.Entity<StationInvite>()
             .HasOne(stationInvite => stationInvite.Sender)
             .WithMany()
             .HasForeignKey(stationInvite => stationInvite.SenderId)
             .OnDelete(DeleteBehavior.Restrict);
-        
+
         modelBuilder.Entity<Channel>()
             .HasOne(channel => channel.Creator)
             .WithMany()
