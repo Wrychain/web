@@ -9,6 +9,7 @@ public class PlatformInvite: IEntity
     public int Id { get; set; }
     public required int SenderId { get; set; }
     public required string TokenHash { get; set; }
+    public int? ReceiverId { get; set; }
 
     // Meta
     public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -18,4 +19,5 @@ public class PlatformInvite: IEntity
 
     // Navigation
     public User? Sender { get; set; }
+    public User? Receiver { get; set; }
 }
