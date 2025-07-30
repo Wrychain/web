@@ -8,7 +8,7 @@ public class PlatformInvite: IEntity
     // Main
     public int Id { get; set; }
     public required int SenderId { get; set; }
-    public required string Token { get; set; }
+    public required string TokenHash { get; set; }
 
     // Meta
     public DateTime CreatedAt { get; set; } = DateTime.Now;
