@@ -90,5 +90,4 @@ export default {
 {
   background-color:#000 !important;
 }
-
 </style>

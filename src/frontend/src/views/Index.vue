@@ -35,10 +35,12 @@ div#wrychain-banner
 {
   border-bottom: 10px solid #b2bec3;
 }
+
 h1#wrychain-header
 {
   border-left: 10px solid #b2bec3;
 }
+
 div#login
 {
   border-bottom: 1px solid #636e72;
