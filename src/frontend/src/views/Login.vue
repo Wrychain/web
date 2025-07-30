@@ -57,7 +57,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #wrychain-banner
 {
   border-bottom: 10px solid #b2bec3;
