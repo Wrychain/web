@@ -37,10 +37,4 @@ public class UserService
 
         return true;
     }
-
-    public IEnumerable<User> Test()
-    {
-        var users = _userRepository.FindAll();
-        return users;
-    }
 }
