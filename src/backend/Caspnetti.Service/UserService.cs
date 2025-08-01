@@ -1,3 +1,4 @@
+using Caspnetti.DAL.Entity.Invites;
 using Caspnetti.DAL.Entity.Users;
 using Caspnetti.DAL.Repository;
 using System.Security.Cryptography;
@@ -31,7 +32,7 @@ public class UserService
         }
 
         // Taken username case
-        if (_userRepository.FindOneBy(user => user.username == username) != null)
+        if (_userRepository.FindOneBy(user => user.Username == username) != null)
         {
             return false;
         }
@@ -42,7 +43,6 @@ public class UserService
         User user = new User()
         {
             Username = username,
-            Salt = salt,
             PasswordHash = passwordHash,
             DisplayName = displayName,
         };
@@ -51,7 +51,7 @@ public class UserService
 
         // TODO: Prevent quering the invite a second time in the future
         // Inactivate invite and attach created user's id
-        PlatformInvite? invite = _platformInviteRepository.FindOneBy(invite => invite.TokenHash == tokenHash);
+        PlatformInvite invite = _platformInviteRepository.FindOneBy(invite => invite.TokenHash == tokenHash)!;
         invite.ReceiverId = user.Id;
         invite.IsActive = false;
         _platformInviteRepository.Save();
@@ -62,7 +62,7 @@ public class UserService
     public bool Login(string username, string password)
     {
         // Lookup user by username and obtain stored passwordHash
-        User? user = _userRepository.FindOneBy(user => user.username == username);
+        User? user = _userRepository.FindOneBy(user => user.Username == username);
 
         if (user == null)
         {
