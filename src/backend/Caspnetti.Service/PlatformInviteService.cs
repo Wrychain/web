@@ -13,7 +13,7 @@ public class PlatformInviteService
         _platformInviteRepository = platformInviteRepository;
     }
 
-    public string Generate()
+    public string GenerateToken()
     {
         string tokenHash;
 
@@ -38,7 +38,7 @@ public class PlatformInviteService
         return tokenHash;
     }
 
-    public bool Validate(string tokenHash)
+    public bool ValidateToken(string tokenHash)
     {
         PlatformInvite? invite = _platformInviteRepository.FindOneBy(invite => invite.TokenHash == tokenHash);
 

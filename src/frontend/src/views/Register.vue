@@ -13,25 +13,31 @@
     <div class="row">
       <div class="col m-5 mb-0 input-group-lg">
         <label for="username">Username</label>
-        <input id="username" type="text" class="form-control rounded-0">
+        <input id="username" name="username" type="text" class="form-control rounded-0">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col m-5 mb-0 input-group-lg">
+        <label for="display_name">Display name</label>
+        <input id="display_name" name="display_name" type="text" class="form-control rounded-0">
       </div>
     </div>
     <div class="row">
       <div class="col m-5 mb-0 input-group-lg">
         <label for="password">Password</label>
-        <input id="password" v-model="password" type="password" class="form-control rounded-0">
+        <input id="password" name="password" v-model="password" type="password" class="form-control rounded-0">
       </div>
     </div>
     <div class="row">
       <div class="col m-5 mb-0 input-group-lg">
-        <label for="confirm-password">Confirm password</label>
-        <input id="confirm-password" v-model="confirmPassword" type="password" class="form-control rounded-0">
+        <label for="confirm_password">Confirm password</label>
+        <input id="confirm_password" name="confirm_password" v-model="confirmPassword" type="password" class="form-control rounded-0">
       </div>
     </div>
     <div class="row">
       <div class="col m-5 mb-0 input-group-lg">
         <label for="token">Token</label>
-        <input id="token" type="password" class="form-control rounded-0">
+        <input id="token" name="token" type="password" class="form-control rounded-0">
       </div>
     </div>
     <div class="row">
