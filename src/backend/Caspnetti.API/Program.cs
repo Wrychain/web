@@ -9,11 +9,10 @@ var MSSQLConnection = builder.Configuration.GetConnectionString("MSSQLConnection
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://localhost");
-        });
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost");
+    });
 });
 
 builder.Services.AddControllers();
