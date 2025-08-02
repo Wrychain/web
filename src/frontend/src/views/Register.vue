@@ -145,8 +145,8 @@ const formIsValid = computed(() => {
     confirmPassword.value &&
     token.value &&
     // api results
-    // usernameAvailability.value === 'available' &&
-    // tokenValidity.value === 'true' &&
+    usernameAvailability.value === 'available' &&
+    tokenValidity.value === 'true' &&
     // background classes
     usernameBackgroundClass.value === 'bg-success-subtle' &&
     tokenBackgroundClass.value === 'bg-success-subtle'
