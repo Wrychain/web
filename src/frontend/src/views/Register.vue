@@ -10,12 +10,7 @@
         <h1 id="login-header" class="py-3 text-center border-start-2">Register</h1>
       </div>
     </div>
-    <div class="row">
-      <div class="col m-5 mb-0 input-group-lg">
-        <label for="username">Username</label>
-        <input id="username" name="username" type="text" class="form-control rounded-0">
-      </div>
-    </div>
+    <RegisterUsernameInput></RegisterUsernameInput>
     <div class="row">
       <div class="col m-5 mb-0 input-group-lg">
         <label for="display_name">Display name</label>
@@ -62,6 +57,7 @@
 </template>
 
 <script setup>
+import RegisterUsernameInput from '@/components/RegisterUsernameInput.vue';
 import { ref, computed } from 'vue'
 
 const password = ref('')
@@ -75,6 +71,14 @@ const formValid = computed(() =>
 
 function registerSubmit() {
   alert('Form submitted!')
+}
+</script>
+
+<script>
+export default {
+  components: {
+    RegisterUsernameInput
+  }
 }
 </script>
 

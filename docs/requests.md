@@ -1,2 +1,3 @@
 - Do not put a moving gradient as the end of stream background. Discord is dumb.
-- Autopause gifs on unfocus
+- Autopause gifs on unfocus.
+- Split screen when watching a stream and opening a dm. Emulate something close to running multiple windows on andriod.
