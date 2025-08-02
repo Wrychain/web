@@ -83,7 +83,7 @@
             :disabled="!formIsValid"
             id="register-button"
             class="btn bg-white py-3 button-border rounded-0"
-            :click="registerSubmit"
+            @click="registerSubmit"
             :class="submitBackgroundClass"
           >
             Register
@@ -196,11 +196,11 @@ async function checkToken() {
 }
 
 function registerSubmit() {
-  if (!formValid()) {
-    alert('Form is not valid!')
+  if (!formIsValid) {
+    console.log('invalid')
     return
   }
-  alert('Form submitted!')
+  console.log('submitted')
 }
 </script>
 
