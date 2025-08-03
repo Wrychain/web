@@ -68,8 +68,6 @@ services:
     env_file:
       - ./docker/test/vue/.env.local
     image: caspnetti_vue_test
-    ports:
-      - 80:80
     volumes:
       - ./src/frontend:/caspnetti
     networks:

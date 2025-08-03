@@ -4,7 +4,7 @@
       <div id="wrychain-banner" class="col vh-100 d-flex align-items-center justify-content-center">
 
         <div class="box text-center">
-          <h1 id="wrychain-header" class="display-1 mb-5 py-4">Wrychain</h1>
+          <h1 id="wrychain-header" class="display-1 mb-5 p-4">Wrychain</h1>
           <div class="p-5 bg-light">Trust is your social network.</div>
         </div>
 
@@ -26,9 +26,6 @@
     </div>
   </div>
 </template>
-
-<script>
-</script>
 
 <style scoped>
 div#wrychain-banner

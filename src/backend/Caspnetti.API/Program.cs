@@ -7,14 +7,6 @@ using System.IO;
 var builder = WebApplication.CreateBuilder(args);
 var MSSQLConnection = builder.Configuration.GetConnectionString("MSSQLConnection");
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.WithOrigins("http://localhost");
-    });
-});
-
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(MSSQLConnection));
@@ -31,7 +23,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseCors();
 }
 
 app.UseHttpsRedirection();
