@@ -6,18 +6,6 @@ using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 var MSSQLConnection = builder.Configuration.GetConnectionString("MSSQLConnection");
-var CORS = builder.Configuration["CORS"];
-
-if (CORS != null)
-{
-    builder.Services.AddCors(options =>
-    {
-        options.AddDefaultPolicy(policy =>
-        {
-            policy.WithOrigins(CORS);
-        });
-    });
-}
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -35,7 +23,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseCors();
 }
 
 app.UseHttpsRedirection();

@@ -106,8 +106,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 const username = ref('')
 const password = ref('')
 const displayName = ref('')
@@ -168,7 +166,7 @@ async function checkUsername() {
 
   try {
     const response = await fetch(
-      `${apiUrl}/api/user/check?username=${encodeURIComponent(trimmed)}`
+      `/api/user/check?username=${encodeURIComponent(trimmed)}`
     )
     const result = await response.json()
     usernameAvailability.value = result.available ? 'available' : 'taken'
@@ -187,7 +185,7 @@ async function checkToken() {
 
   try {
     const response = await fetch(
-      `${apiUrl}/api/invite/platform/check?token=${encodeURIComponent(trimmed)}`
+      `/api/invite/platform/check?token=${encodeURIComponent(trimmed)}`
     )
     const result = await response.json()
     tokenValidity.value = result.valid

@@ -67,8 +67,6 @@ services:
     env_file:
       - ./docker/production/vue/.env.local
     image: caspnetti_vue_production
-    ports:
-      - 80:80
     networks:
       - caspnetti_production
 
