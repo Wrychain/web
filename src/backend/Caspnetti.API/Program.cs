@@ -6,14 +6,18 @@ using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 var MSSQLConnection = builder.Configuration.GetConnectionString("MSSQLConnection");
+var CORS = builder.Configuration["CORS"];
 
-builder.Services.AddCors(options =>
+if (CORS != null)
 {
-    options.AddDefaultPolicy(policy =>
+    builder.Services.AddCors(options =>
     {
-        policy.WithOrigins("http://localhost");
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.WithOrigins(CORS);
+        });
     });
-});
+}
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
