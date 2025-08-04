@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker restart caspnetti_vue_test --attach
+docker restart wrychain_vue_test --attach

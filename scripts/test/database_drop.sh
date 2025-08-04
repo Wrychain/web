@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -it caspnetti_aspnet_test bash -c "dotnet ef database drop --project Caspnetti.API"
+docker exec -it wrychain_aspnet_test bash -c "dotnet ef database drop --project Wrychain.API"

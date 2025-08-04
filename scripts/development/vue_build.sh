@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -t caspnetti_vue_development bash -c "npm run build"
+docker exec -t wrychain_vue_development bash -c "npm run build"

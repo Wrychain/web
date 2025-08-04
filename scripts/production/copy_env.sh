@@ -6,5 +6,5 @@ cp -n docker/production/aspnet/.env docker/production/aspnet/.env.local
 cp -n docker/production/mssql/.env docker/production/mssql/.env.local
 cp -n docker/production/vue/.env docker/production/vue/.env.local
 
-cp -n docker/production/nginx/caspnetti-ssl.conf docker/production/nginx/caspnetti-ssl.conf.local
-cp -n docker/production/nginx/caspnetti.conf docker/production/nginx/caspnetti.conf.local
+cp -n docker/production/nginx/wrychain-ssl.conf docker/production/nginx/wrychain-ssl.conf.local
+cp -n docker/production/nginx/wrychain.conf docker/production/nginx/wrychain.conf.local
