@@ -1,80 +1,80 @@
 services:
 
-  caspnetti_adminer_test:
+  wrychain_adminer_test:
     build:
       context: ./
       dockerfile: ./docker/test/adminer/Dockerfile
-    container_name: caspnetti_adminer_test
+    container_name: wrychain_adminer_test
     depends_on:
-      - caspnetti_mssql_test
+      - wrychain_mssql_test
     env_file:
       - ./docker/test/adminer/.env.local
-    image: caspnetti_adminer_test
+    image: wrychain_adminer_test
     ports:
       - 8000:8080
     networks:
-      - caspnetti_test
+      - wrychain_test
 
-  caspnetti_aspnet_test:
+  wrychain_aspnet_test:
     build:
       context: ./
       dockerfile: ./docker/test/aspnet/Dockerfile
-    container_name: caspnetti_aspnet_test
+    container_name: wrychain_aspnet_test
     depends_on:
-      - caspnetti_mssql_test
+      - wrychain_mssql_test
     env_file:
       - ./docker/test/aspnet/.env.local
-    image: caspnetti_aspnet_test
+    image: wrychain_aspnet_test
     volumes:
-      - ./src/backend:/caspnetti
+      - ./src/backend:/wrychain
     networks:
-      - caspnetti_test
+      - wrychain_test
 
-  caspnetti_mssql_test:
+  wrychain_mssql_test:
     build:
       context: ./
       dockerfile: ./docker/test/mssql/Dockerfile
-    container_name: caspnetti_mssql_test
+    container_name: wrychain_mssql_test
     env_file:
       - ./docker/test/mssql/.env.local
-    image: caspnetti_mssql_test
+    image: wrychain_mssql_test
     volumes:
       - ./docker/test/mssql/data:/var/opt/mssql/data
     networks:
-      - caspnetti_test
+      - wrychain_test
 
-  caspnetti_nginx_test:
-    container_name: caspnetti_nginx_test
+  wrychain_nginx_test:
+    container_name: wrychain_nginx_test
     build:
       context: ./
       dockerfile: docker/test/nginx/Dockerfile
     depends_on:
-      - caspnetti_aspnet_test
-    image: caspnetti_nginx_test
+      - wrychain_aspnet_test
+    image: wrychain_nginx_test
     ports:
       - 443:443
     volumes:
       - ./docker/test/nginx/logs:/var/log/nginx
     networks:
-      - caspnetti_test
+      - wrychain_test
 
-  caspnetti_vue_test:
+  wrychain_vue_test:
     build:
       context: ./
       dockerfile: ./docker/test/vue/Dockerfile
-    container_name: caspnetti_vue_test
+    container_name: wrychain_vue_test
     depends_on:
-      - caspnetti_aspnet_test
+      - wrychain_aspnet_test
     env_file:
       - ./docker/test/vue/.env.local
-    image: caspnetti_vue_test
+    image: wrychain_vue_test
     volumes:
-      - ./src/frontend:/caspnetti
+      - ./src/frontend:/wrychain
     networks:
-      - caspnetti_test
+      - wrychain_test
 
 networks:
 
-  caspnetti_test:
-    name: caspnetti_test
+  wrychain_test:
+    name: wrychain_test
     driver: bridge

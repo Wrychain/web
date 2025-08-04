@@ -1,80 +1,80 @@
 services:
 
-  caspnetti_adminer_development:
+  wrychain_adminer_development:
     build:
       context: ./
       dockerfile: ./docker/development/adminer/Dockerfile
-    container_name: caspnetti_adminer_development
+    container_name: wrychain_adminer_development
     depends_on:
-      - caspnetti_mssql_development
+      - wrychain_mssql_development
     env_file:
       - ./docker/development/adminer/.env.local
-    image: caspnetti_adminer_development
+    image: wrychain_adminer_development
     ports:
       - 8000:8080
     networks:
-      - caspnetti_development
+      - wrychain_development
 
-  caspnetti_aspnet_development:
+  wrychain_aspnet_development:
     build:
       context: ./
       dockerfile: ./docker/development/aspnet/Dockerfile
-    container_name: caspnetti_aspnet_development
+    container_name: wrychain_aspnet_development
     depends_on:
-      - caspnetti_mssql_development
+      - wrychain_mssql_development
     env_file:
       - ./docker/development/aspnet/.env.local
-    image: caspnetti_aspnet_development
+    image: wrychain_aspnet_development
     volumes:
-      - ./src/backend:/caspnetti
+      - ./src/backend:/wrychain
     networks:
-      - caspnetti_development
+      - wrychain_development
 
-  caspnetti_mssql_development:
+  wrychain_mssql_development:
     build:
       context: ./
       dockerfile: ./docker/development/mssql/Dockerfile
-    container_name: caspnetti_mssql_development
+    container_name: wrychain_mssql_development
     env_file:
       - ./docker/development/mssql/.env.local
-    image: caspnetti_mssql_development
+    image: wrychain_mssql_development
     volumes:
       - ./docker/development/mssql/data:/var/opt/mssql/data
     networks:
-      - caspnetti_development
+      - wrychain_development
 
-  caspnetti_nginx_development:
-    container_name: caspnetti_nginx_development
+  wrychain_nginx_development:
+    container_name: wrychain_nginx_development
     build:
       context: ./
       dockerfile: docker/development/nginx/Dockerfile
     depends_on:
-      - caspnetti_aspnet_development
-    image: caspnetti_nginx_development
+      - wrychain_aspnet_development
+    image: wrychain_nginx_development
     ports:
       - 443:443
     volumes:
       - ./docker/development/nginx/logs:/var/log/nginx
     networks:
-      - caspnetti_development
+      - wrychain_development
 
-  caspnetti_vue_development:
+  wrychain_vue_development:
     build:
       context: ./
       dockerfile: ./docker/development/vue/Dockerfile
-    container_name: caspnetti_vue_development
+    container_name: wrychain_vue_development
     depends_on:
-      - caspnetti_aspnet_development
+      - wrychain_aspnet_development
     env_file:
       - ./docker/development/vue/.env.local
-    image: caspnetti_vue_development
+    image: wrychain_vue_development
     volumes:
-      - ./src/frontend:/caspnetti
+      - ./src/frontend:/wrychain
     networks:
-      - caspnetti_development
+      - wrychain_development
 
 networks:
 
-  caspnetti_development:
-    name: caspnetti_development
+  wrychain_development:
+    name: wrychain_development
     driver: bridge

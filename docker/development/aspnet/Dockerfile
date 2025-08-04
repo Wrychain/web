@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0
 
-WORKDIR /caspnetti
+WORKDIR /wrychain
 
 RUN apt update
 RUN apt upgrade -y

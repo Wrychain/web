@@ -2,13 +2,13 @@ services:
 
   # Monitoring
 
-  caspnetti_monitor:
+  wrychain_monitor:
     build:
       context: ./
       dockerfile: ./docker/monitor/Dockerfile
-    container_name: caspnetti_monitor
-    image: caspnetti_monitor
+    container_name: wrychain_monitor
+    image: wrychain_monitor
     networks:
-      - caspnetti
+      - wrychain
     volumes:
       - //var/run/docker.sock:/var/run/docker.sock

@@ -6,12 +6,12 @@ RUN apt upgrade -y
 RUN mkdir -p /etc/nginx/ssl
 
 # Copy ssl config to temp dir
-COPY ./docker/production/nginx/caspnetti-ssl.conf.local /tmp/caspnetti-ssl.conf
+COPY ./docker/production/nginx/wrychain-ssl.conf.local /tmp/wrychain-ssl.conf
 
 # Generate the key and cert (valid for 1 year)
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/caspnetti.key -out /etc/nginx/ssl/caspnetti.crt -config /tmp/caspnetti-ssl.conf
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/nginx/ssl/wrychain.key -out /etc/nginx/ssl/wrychain.crt -config /tmp/wrychain-ssl.conf
 
 # Generate mobile cert
-# RUN openssl pkcs12 -export -out mobile-cert.p12 -inkey /etc/nginx/ssl/caspnetti.key -in /etc/nginx/ssl/caspnetti.crt
+# RUN openssl pkcs12 -export -out mobile-cert.p12 -inkey /etc/nginx/ssl/wrychain.key -in /etc/nginx/ssl/wrychain.crt
 
-COPY ./docker/production/nginx/caspnetti.conf.local /etc/nginx/conf.d/caspnetti.conf
+COPY ./docker/production/nginx/wrychain.conf.local /etc/nginx/conf.d/wrychain.conf

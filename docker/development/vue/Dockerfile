@@ -4,6 +4,6 @@ RUN apt update
 RUN apt upgrade -y
 RUN npm install -g @vue/cli
 
-WORKDIR /caspnetti
+WORKDIR /wrychain
 
 ENTRYPOINT npm update && npm start
