@@ -5,7 +5,6 @@ WORKDIR /caspnetti
 RUN apt update
 RUN apt upgrade -y
 
-RUN dotnet dev-certs https --trust
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 
