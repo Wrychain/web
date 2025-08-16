@@ -8,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 var MSSQLConnection = builder.Configuration.GetConnectionString("MSSQLConnection");
 var RedisConnection = builder.Configuration.GetConnectionString("RedisConnection");
 
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(MSSQLConnection));
+// Repositories
+builder.Services.AddScoped<PlatformInviteRepository>();
+builder.Services.AddScoped<StationRepository>();
+builder.Services.AddScoped<UserRepository>();
+// Services
+builder.Services.AddScoped<PlatformInviteService>();
+builder.Services.AddScoped<UserService>();
 // Session
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -20,17 +30,6 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(MSSQLConnection));
-// Repositories
-builder.Services.AddScoped<PlatformInviteRepository>();
-builder.Services.AddScoped<StationRepository>();
-builder.Services.AddScoped<UserRepository>();
-// Services
-builder.Services.AddScoped<PlatformInviteService>();
-builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
