@@ -22,7 +22,7 @@ services:
     container_name: wrychain_aspnet_production
     depends_on:
       - wrychain_mssql_production
-      - wrychain_redis_test
+      - wrychain_redis_production
     env_file:
       - ./docker/production/aspnet/.env.local
     image: wrychain_aspnet_production
