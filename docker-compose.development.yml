@@ -22,6 +22,7 @@ services:
     container_name: wrychain_aspnet_development
     depends_on:
       - wrychain_mssql_development
+      - wrychain_redis_development
     env_file:
       - ./docker/development/aspnet/.env.local
     image: wrychain_aspnet_development
@@ -55,6 +56,17 @@ services:
       - 443:443
     volumes:
       - ./docker/development/nginx/logs:/var/log/nginx
+    networks:
+      - wrychain_development
+
+  wrychain_redis_development:
+    build:
+      context: ./
+      dockerfile: ./docker/development/redis/Dockerfile
+    container_name: wrychain_redis_development
+    image: wrychain_redis_development
+    volumes:
+      - ./docker/development/redis/data:/var/lib/redis
     networks:
       - wrychain_development
 

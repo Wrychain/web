@@ -22,6 +22,7 @@ services:
     container_name: wrychain_aspnet_production
     depends_on:
       - wrychain_mssql_production
+      - wrychain_redis_test
     env_file:
       - ./docker/production/aspnet/.env.local
     image: wrychain_aspnet_production
@@ -55,6 +56,17 @@ services:
       - ./docker/production/nginx/logs:/var/log/nginx
     networks:
       # - reproxy
+      - wrychain_production
+
+  wrychain_redis_production:
+    build:
+      context: ./
+      dockerfile: ./docker/production/redis/Dockerfile
+    container_name: wrychain_redis_production
+    image: wrychain_redis_production
+    volumes:
+      - ./docker/production/redis/data:/var/lib/redis
+    networks:
       - wrychain_production
 
   wrychain_vue_production:
