@@ -8,3 +8,4 @@ cp -n docker/development/vue/.env docker/development/vue/.env.local
 
 cp -n docker/development/nginx/wrychain-ssl.conf docker/development/nginx/wrychain-ssl.conf.local
 cp -n docker/development/nginx/wrychain.conf docker/development/nginx/wrychain.conf.local
+cp -n docker/development/redis/redis.conf docker/development/redis/redis.conf.local

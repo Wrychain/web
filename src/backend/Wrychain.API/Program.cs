@@ -6,6 +6,7 @@ using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 var MSSQLConnection = builder.Configuration.GetConnectionString("MSSQLConnection");
+var RedisConnection = builder.Configuration.GetConnectionString("RedisConnection");
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -17,6 +18,18 @@ builder.Services.AddScoped<UserRepository>();
 // Services
 builder.Services.AddScoped<PlatformInviteService>();
 builder.Services.AddScoped<UserService>();
+// Session
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = RedisConnection;
+    options.InstanceName = "Wrychain_";
+});
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(60 * 24);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -25,8 +38,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseAuthorization();
+app.UseSession();
 app.MapControllers();
 app.Run();
