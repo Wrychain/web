@@ -9,7 +9,7 @@ fi
 REMOTE="$1"
 REMOTE_COMMANDS=$(cat <<'ENDSSH'
 echo "Pulling lastest refs from remote"
-cd ~/projects/wryco/wryco-web
+cd ~/projects/wrychain/web
 git pull origin master
 echo "Rebuilding docker images"
 ./scripts/production/docker_build.sh
