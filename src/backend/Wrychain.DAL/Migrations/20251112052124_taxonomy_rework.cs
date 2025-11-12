@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Wrychain.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Reworked_entities : Migration
+    public partial class taxonomy_rework : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,7 +29,7 @@ namespace Wrychain.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Channel",
+                name: "Category",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,32 +43,32 @@ namespace Wrychain.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Channel", x => x.Id);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChannelFeed",
+                name: "CategoryChannel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SortIndex = table.Column<int>(type: "int", nullable: false),
-                    ChannelId = table.Column<int>(type: "int", nullable: false),
-                    FeedId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    ChannelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChannelFeed", x => x.Id);
+                    table.PrimaryKey("PK_CategoryChannel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChannelFeed_Channel_ChannelId",
-                        column: x => x.ChannelId,
-                        principalTable: "Channel",
+                        name: "FK_CategoryChannel_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Feed",
+                name: "Channel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -82,75 +82,75 @@ namespace Wrychain.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Feed", x => x.Id);
+                    table.PrimaryKey("PK_Channel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FeedInvite",
+                name: "ChannelInvite",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SenderId = table.Column<int>(type: "int", nullable: false),
                     ReceiverId = table.Column<int>(type: "int", nullable: false),
-                    FeedId = table.Column<int>(type: "int", nullable: false),
+                    ChannelId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FeedInvite", x => x.Id);
+                    table.PrimaryKey("PK_ChannelInvite", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FeedInvite_Feed_FeedId",
-                        column: x => x.FeedId,
-                        principalTable: "Feed",
+                        name: "FK_ChannelInvite_Channel_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FeedReader",
+                name: "ChannelReader",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    FeedId = table.Column<int>(type: "int", nullable: false),
+                    ChannelId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FeedReader", x => x.Id);
+                    table.PrimaryKey("PK_ChannelReader", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FeedReader_Feed_FeedId",
-                        column: x => x.FeedId,
-                        principalTable: "Feed",
+                        name: "FK_ChannelReader_Channel_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FeedWriter",
+                name: "ChannelWriter",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    FeedId = table.Column<int>(type: "int", nullable: false),
+                    ChannelId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FeedWriter", x => x.Id);
+                    table.PrimaryKey("PK_ChannelWriter", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FeedWriter_Feed_FeedId",
-                        column: x => x.FeedId,
-                        principalTable: "Feed",
+                        name: "FK_ChannelWriter_Channel_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -261,7 +261,7 @@ namespace Wrychain.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    TokenHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IPAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -356,7 +356,8 @@ namespace Wrychain.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SenderId = table.Column<int>(type: "int", nullable: false),
-                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TokenHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReceiverId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -365,6 +366,11 @@ namespace Wrychain.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PlatformInvite", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlatformInvite_User_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "User",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PlatformInvite_User_SenderId",
                         column: x => x.SenderId,
@@ -379,7 +385,7 @@ namespace Wrychain.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FeedId = table.Column<int>(type: "int", nullable: false),
+                    ChannelId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Action = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -390,9 +396,9 @@ namespace Wrychain.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Presence", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Presence_Feed_FeedId",
-                        column: x => x.FeedId,
-                        principalTable: "Feed",
+                        name: "FK_Presence_Channel_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -478,7 +484,7 @@ namespace Wrychain.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FeedId = table.Column<int>(type: "int", nullable: false),
+                    ChannelId = table.Column<int>(type: "int", nullable: false),
                     CreatorId = table.Column<int>(type: "int", nullable: false),
                     LastMessageReadId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -489,9 +495,9 @@ namespace Wrychain.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Progress", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Progress_Feed_FeedId",
-                        column: x => x.FeedId,
-                        principalTable: "Feed",
+                        name: "FK_Progress_Channel_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -563,91 +569,54 @@ namespace Wrychain.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StationCustomChannel",
+                name: "StationChannel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SortIndex = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     StationId = table.Column<int>(type: "int", nullable: false),
-                    ChannelId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    ChannelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StationCustomChannel", x => x.Id);
+                    table.PrimaryKey("PK_StationChannel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StationCustomChannel_Channel_ChannelId",
+                        name: "FK_StationChannel_Channel_ChannelId",
                         column: x => x.ChannelId,
                         principalTable: "Channel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StationCustomChannel_Station_StationId",
+                        name: "FK_StationChannel_Station_StationId",
                         column: x => x.StationId,
                         principalTable: "Station",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StationCustomChannel_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StationDefaultChannel",
+                name: "StationDefaultCategory",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SortIndex = table.Column<int>(type: "int", nullable: false),
                     StationId = table.Column<int>(type: "int", nullable: false),
-                    ChannelId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StationDefaultChannel", x => x.Id);
+                    table.PrimaryKey("PK_StationDefaultCategory", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StationDefaultChannel_Channel_ChannelId",
-                        column: x => x.ChannelId,
-                        principalTable: "Channel",
+                        name: "FK_StationDefaultCategory_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StationDefaultChannel_Station_StationId",
-                        column: x => x.StationId,
-                        principalTable: "Station",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StationFeed",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StationId = table.Column<int>(type: "int", nullable: false),
-                    FeedId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StationFeed", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StationFeed_Feed_FeedId",
-                        column: x => x.FeedId,
-                        principalTable: "Feed",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StationFeed_Station_StationId",
+                        name: "FK_StationDefaultCategory_Station_StationId",
                         column: x => x.StationId,
                         principalTable: "Station",
                         principalColumn: "Id",
@@ -715,6 +684,43 @@ namespace Wrychain.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StationUserCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SortIndex = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    StationId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StationUserCategory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StationUserCategory_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StationUserCategory_Station_StationId",
+                        column: x => x.StationId,
+                        principalTable: "Station",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StationUserCategory_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StationUserSetting",
                 columns: table => new
                 {
@@ -761,68 +767,68 @@ namespace Wrychain.DAL.Migrations
                 column: "MessageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Category_CreatorId",
+                table: "Category",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Category_StationId",
+                table: "Category",
+                column: "StationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryChannel_CategoryId",
+                table: "CategoryChannel",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryChannel_ChannelId",
+                table: "CategoryChannel",
+                column: "ChannelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Channel_CreatorId",
                 table: "Channel",
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Channel_StationId",
+                name: "IX_Channel_UserId",
                 table: "Channel",
-                column: "StationId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChannelFeed_ChannelId",
-                table: "ChannelFeed",
+                name: "IX_ChannelInvite_ChannelId",
+                table: "ChannelInvite",
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChannelFeed_FeedId",
-                table: "ChannelFeed",
-                column: "FeedId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Feed_CreatorId",
-                table: "Feed",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Feed_UserId",
-                table: "Feed",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FeedInvite_FeedId",
-                table: "FeedInvite",
-                column: "FeedId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FeedInvite_ReceiverId",
-                table: "FeedInvite",
+                name: "IX_ChannelInvite_ReceiverId",
+                table: "ChannelInvite",
                 column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedInvite_SenderId",
-                table: "FeedInvite",
+                name: "IX_ChannelInvite_SenderId",
+                table: "ChannelInvite",
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedReader_FeedId",
-                table: "FeedReader",
-                column: "FeedId");
+                name: "IX_ChannelReader_ChannelId",
+                table: "ChannelReader",
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedReader_UserId",
-                table: "FeedReader",
+                name: "IX_ChannelReader_UserId",
+                table: "ChannelReader",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedWriter_FeedId",
-                table: "FeedWriter",
-                column: "FeedId");
+                name: "IX_ChannelWriter_ChannelId",
+                table: "ChannelWriter",
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedWriter_UserId",
-                table: "FeedWriter",
+                name: "IX_ChannelWriter_UserId",
+                table: "ChannelWriter",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -876,14 +882,19 @@ namespace Wrychain.DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlatformInvite_ReceiverId",
+                table: "PlatformInvite",
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlatformInvite_SenderId",
                 table: "PlatformInvite",
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Presence_FeedId",
+                name: "IX_Presence_ChannelId",
                 table: "Presence",
-                column: "FeedId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Presence_UserId",
@@ -891,14 +902,14 @@ namespace Wrychain.DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Progress_ChannelId",
+                table: "Progress",
+                column: "ChannelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Progress_CreatorId",
                 table: "Progress",
                 column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Progress_FeedId",
-                table: "Progress",
-                column: "FeedId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Progress_LastMessageReadId",
@@ -931,38 +942,23 @@ namespace Wrychain.DAL.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationCustomChannel_ChannelId",
-                table: "StationCustomChannel",
+                name: "IX_StationChannel_ChannelId",
+                table: "StationChannel",
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationCustomChannel_StationId",
-                table: "StationCustomChannel",
+                name: "IX_StationChannel_StationId",
+                table: "StationChannel",
                 column: "StationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationCustomChannel_UserId",
-                table: "StationCustomChannel",
-                column: "UserId");
+                name: "IX_StationDefaultCategory_CategoryId",
+                table: "StationDefaultCategory",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationDefaultChannel_ChannelId",
-                table: "StationDefaultChannel",
-                column: "ChannelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StationDefaultChannel_StationId",
-                table: "StationDefaultChannel",
-                column: "StationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StationFeed_FeedId",
-                table: "StationFeed",
-                column: "FeedId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StationFeed_StationId",
-                table: "StationFeed",
+                name: "IX_StationDefaultCategory_StationId",
+                table: "StationDefaultCategory",
                 column: "StationId");
 
             migrationBuilder.CreateIndex(
@@ -984,6 +980,21 @@ namespace Wrychain.DAL.Migrations
                 name: "IX_StationUser_MembersId",
                 table: "StationUser",
                 column: "MembersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StationUserCategory_CategoryId",
+                table: "StationUserCategory",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StationUserCategory_StationId",
+                table: "StationUserCategory",
+                column: "StationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StationUserCategory_UserId",
+                table: "StationUserCategory",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StationUserSetting_StationId",
@@ -1039,12 +1050,28 @@ namespace Wrychain.DAL.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Channel_Station_StationId",
-                table: "Channel",
+                name: "FK_Category_Station_StationId",
+                table: "Category",
                 column: "StationId",
                 principalTable: "Station",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Category_User_CreatorId",
+                table: "Category",
+                column: "CreatorId",
+                principalTable: "User",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CategoryChannel_Channel_ChannelId",
+                table: "CategoryChannel",
+                column: "ChannelId",
+                principalTable: "Channel",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Channel_User_CreatorId",
@@ -1055,55 +1082,39 @@ namespace Wrychain.DAL.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ChannelFeed_Feed_FeedId",
-                table: "ChannelFeed",
-                column: "FeedId",
-                principalTable: "Feed",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Feed_User_CreatorId",
-                table: "Feed",
-                column: "CreatorId",
-                principalTable: "User",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Feed_User_UserId",
-                table: "Feed",
+                name: "FK_Channel_User_UserId",
+                table: "Channel",
                 column: "UserId",
                 principalTable: "User",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_FeedInvite_User_ReceiverId",
-                table: "FeedInvite",
+                name: "FK_ChannelInvite_User_ReceiverId",
+                table: "ChannelInvite",
                 column: "ReceiverId",
                 principalTable: "User",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_FeedInvite_User_SenderId",
-                table: "FeedInvite",
+                name: "FK_ChannelInvite_User_SenderId",
+                table: "ChannelInvite",
                 column: "SenderId",
                 principalTable: "User",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_FeedReader_User_UserId",
-                table: "FeedReader",
+                name: "FK_ChannelReader_User_UserId",
+                table: "ChannelReader",
                 column: "UserId",
                 principalTable: "User",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_FeedWriter_User_UserId",
-                table: "FeedWriter",
+                name: "FK_ChannelWriter_User_UserId",
+                table: "ChannelWriter",
                 column: "UserId",
                 principalTable: "User",
                 principalColumn: "Id",
@@ -1144,16 +1155,16 @@ namespace Wrychain.DAL.Migrations
                 name: "Attachment");
 
             migrationBuilder.DropTable(
-                name: "ChannelFeed");
+                name: "CategoryChannel");
 
             migrationBuilder.DropTable(
-                name: "FeedInvite");
+                name: "ChannelInvite");
 
             migrationBuilder.DropTable(
-                name: "FeedReader");
+                name: "ChannelReader");
 
             migrationBuilder.DropTable(
-                name: "FeedWriter");
+                name: "ChannelWriter");
 
             migrationBuilder.DropTable(
                 name: "FriendInvite");
@@ -1180,19 +1191,19 @@ namespace Wrychain.DAL.Migrations
                 name: "Receipt");
 
             migrationBuilder.DropTable(
-                name: "StationCustomChannel");
+                name: "StationChannel");
 
             migrationBuilder.DropTable(
-                name: "StationDefaultChannel");
-
-            migrationBuilder.DropTable(
-                name: "StationFeed");
+                name: "StationDefaultCategory");
 
             migrationBuilder.DropTable(
                 name: "StationInvite");
 
             migrationBuilder.DropTable(
                 name: "StationUser");
+
+            migrationBuilder.DropTable(
+                name: "StationUserCategory");
 
             migrationBuilder.DropTable(
                 name: "StationUserSetting");
@@ -1210,7 +1221,7 @@ namespace Wrychain.DAL.Migrations
                 name: "Channel");
 
             migrationBuilder.DropTable(
-                name: "Feed");
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Station");

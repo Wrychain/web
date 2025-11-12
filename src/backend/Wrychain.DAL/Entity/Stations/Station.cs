@@ -1,4 +1,4 @@
-using Wrychain.DAL.Entity.Feeds;
+using Wrychain.DAL.Entity.Channels;
 using Wrychain.DAL.Entity.Invites;
 using Wrychain.DAL.Entity.Users;
 
@@ -18,9 +18,9 @@ public class Station: IEntity
 
     public User? Creator { get; set; }
     public List<User>? Members { get; set; }
-    public List<StationDefaultChannel>? DefaultChannels { get; set; }
-    public List<StationCustomChannel>? CustomChannels { get; set; }
+    public List<StationDefaultCategory>? DefaultCategories { get; set; }
+    public List<StationUserCategory>? UserCategories { get; set; }
     public List<StationUserSetting>? UserSettings { get; set; }
-    public List<StationFeed>? GlobalFeeds { get; set; }
+    public List<StationChannel>? GlobalChannels { get; set; }
     public List<StationInvite>? StationInvites { get; set; }
 }

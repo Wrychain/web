@@ -1,13 +1,13 @@
 using Wrychain.DAL.Entity.Users;
 
-namespace Wrychain.DAL.Entity.Feeds;
+namespace Wrychain.DAL.Entity.Channels;
 
-public class FeedReader: IEntity
+public class ChannelWriter: IEntity
 {
     // Main
     public int Id { get; set; }
     public required int UserId { get; set; }
-    public required int FeedId { get; set; }
+    public required int ChannelId { get; set; }
 
     // Meta
     public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -16,5 +16,5 @@ public class FeedReader: IEntity
 
     // Navigation
     public User? User { get; set; }
-    public Feed? Feed { get; set; }
+    public Channel? Channel { get; set; }
 }

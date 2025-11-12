@@ -1,14 +1,14 @@
-using Wrychain.DAL.Entity.Feeds;
+using Wrychain.DAL.Entity.Channels;
 using Wrychain.DAL.Entity.Users;
 using Wrychain.DAL.Enum;
 
-namespace Wrychain.DAL.Entity.Feeds;
+namespace Wrychain.DAL.Entity.Channels;
 
 public class Presence: IEntity
 {
     // Main
     public int Id { get; set; }
-    public required int FeedId { get; set; }
+    public required int ChannelId { get; set; }
     public required int UserId { get; set; }
     public required PresenceAction Action { get; set; }
 
@@ -18,6 +18,6 @@ public class Presence: IEntity
     public bool IsActive { get; set; } = true;
 
     // Navigation
-    public Feed? Feed { get; set; }
+    public Channel? Channel { get; set; }
     public User? User { get; set; }
 }
