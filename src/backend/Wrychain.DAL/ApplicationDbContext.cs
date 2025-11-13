@@ -139,6 +139,10 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(message => message.AuthorId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<Message>()
+            .HasMany(message => message.ParentReplies)
+            .WithMany(message => message.ChildReplies);
+
         // Stations
 
         modelBuilder.Entity<Station>()
