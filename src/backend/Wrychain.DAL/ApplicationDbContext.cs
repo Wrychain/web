@@ -154,13 +154,5 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Station>()
             .HasMany(station => station.Members)
             .WithMany(user => user.JoinedStations);
-
-        
-
-        
-
-        
-
-        
     }
 }
