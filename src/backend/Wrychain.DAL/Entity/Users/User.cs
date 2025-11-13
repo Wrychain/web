@@ -1,4 +1,4 @@
-using Wrychain.DAL.Entity.Feeds;
+using Wrychain.DAL.Entity.Channels;
 using Wrychain.DAL.Entity.Files;
 using Wrychain.DAL.Entity.Stations;
 
@@ -26,7 +26,7 @@ public class User: IEntity
     public List<Notification>? Notifications { get; set; }
     public List<LoginSession>? LoginSessions { get; set; }
     public List<UserVAPID>? VapidSessions { get; set; }
-    public List<Feed>? DirectFeeds { get; set; }
+    public List<Channel>? DirectChannels { get; set; }
     public List<Station>? CreatedStations { get; set; }
     public List<Station>? JoinedStations { get; set; }
 }

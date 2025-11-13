@@ -19,4 +19,8 @@ public class Message: IEntity
     public List<Attachment>? Attachments { get; set; }
     public List<Reaction>? Reactions { get; set; }
     public List<Receipt>? Receipts { get; set; }
+
+    // Self
+    public List<Message>? ParentReplies { get; set; }
+    public List<Message>? ChildReplies { get; set; }
 }

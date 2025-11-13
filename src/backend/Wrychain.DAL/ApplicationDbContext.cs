@@ -1,5 +1,5 @@
+using Wrychain.DAL.Entity.Categories;
 using Wrychain.DAL.Entity.Channels;
-using Wrychain.DAL.Entity.Feeds;
 using Wrychain.DAL.Entity.Files;
 using Wrychain.DAL.Entity.Invites;
 using Wrychain.DAL.Entity.Messages;
@@ -16,33 +16,40 @@ public class ApplicationDbContext : DbContext
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options){}
 
-    public DbSet<Channel> Channel { get; set; }
-    public DbSet<ChannelFeed> ChannelFeed { get; set; }
+    // Categories
+    public DbSet<Category> Category { get; set; }
+    public DbSet<CategoryChannel> CategoryChannel { get; set; }
 
-    public DbSet<Feed> Feed { get; set; }
-    public DbSet<FeedReader> FeedReader { get; set; }
-    public DbSet<FeedWriter> FeedWriter { get; set; }
+    // Channels
+    public DbSet<Channel> Channel { get; set; }
+    public DbSet<ChannelReader> ChannelReader { get; set; }
+    public DbSet<ChannelWriter> ChannelWriter { get; set; }
     public DbSet<Presence> Presence { get; set; }
     public DbSet<Progress> Progress { get; set; }
 
+    // Files
     public DbSet<FilePointer> FilePointer { get; set; }
 
-    public DbSet<FeedInvite> FeedInvite { get; set; }
+    // Invites
+    public DbSet<ChannelInvite> ChannelInvite { get; set; }
     public DbSet<FriendInvite> FriendInvite { get; set; }
     public DbSet<PlatformInvite> PlatformInvite { get; set; }
     public DbSet<StationInvite> StationInvite { get; set; }
 
+    // Messages
     public DbSet<Attachment> Attachment { get; set; }
     public DbSet<Message> Message { get; set; }
     public DbSet<Reaction> Reaction { get; set; }
     public DbSet<Receipt> Receipt { get; set; }
 
+    // Stations
     public DbSet<Station> Station { get; set; }
-    public DbSet<StationCustomChannel> StationCustomChannel { get; set; }
-    public DbSet<StationDefaultChannel> StationDefaultChannel { get; set; }
-    public DbSet<StationFeed> StationFeed { get; set; }
+    public DbSet<StationChannel> StationChannel { get; set; }
+    public DbSet<StationDefaultCategory> StationDefaultCategory { get; set; }
+    public DbSet<StationUserCategory> StationUserCategory { get; set; }
     public DbSet<StationUserSetting> StationUserSetting { get; set; }
 
+    // Users
     public DbSet<LoginAttempt> LoginAttempt { get; set; }
     public DbSet<LoginSession> LoginSession { get; set; }
     public DbSet<Notification> Notification { get; set; }
@@ -69,16 +76,47 @@ public class ApplicationDbContext : DbContext
     {
         // Preventing multiple cascade paths
 
-        modelBuilder.Entity<Channel>()
-            .HasOne(channel => channel.Station)
+
+        // Categories
+
+        modelBuilder.Entity<Category>()
+            .HasOne(category => category.Creator)
             .WithMany()
-            .HasForeignKey(channel => channel.StationId)
+            .HasForeignKey(category => category.CreatorId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Feed>()
-            .HasOne(feed => feed.Creator)
+        modelBuilder.Entity<Category>()
+            .HasOne(category => category.Station)
             .WithMany()
-            .HasForeignKey(feed => feed.CreatorId)
+            .HasForeignKey(category => category.StationId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Channels
+
+        modelBuilder.Entity<Channel>()
+            .HasOne(channel => channel.Creator)
+            .WithMany()
+            .HasForeignKey(channel => channel.CreatorId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Invites
+
+        modelBuilder.Entity<ChannelInvite>()
+            .HasOne(channelInvite => channelInvite.Receiver)
+            .WithMany()
+            .HasForeignKey(channelInvite => channelInvite.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ChannelInvite>()
+            .HasOne(channelInvite => channelInvite.Sender)
+            .WithMany()
+            .HasForeignKey(channelInvite => channelInvite.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<FriendInvite>()
+            .HasOne(friendInvite => friendInvite.Receiver)
+            .WithMany()
+            .HasForeignKey(friendInvite => friendInvite.ReceiverId)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<FriendInvite>()
@@ -87,11 +125,25 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(friendInvite => friendInvite.SenderId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<FriendInvite>()
-            .HasOne(friendInvite => friendInvite.Receiver)
+        modelBuilder.Entity<StationInvite>()
+            .HasOne(stationInvite => stationInvite.Sender)
             .WithMany()
-            .HasForeignKey(friendInvite => friendInvite.ReceiverId)
+            .HasForeignKey(stationInvite => stationInvite.SenderId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // Messages
+
+        modelBuilder.Entity<Message>()
+            .HasOne(message => message.Author)
+            .WithMany()
+            .HasForeignKey(message => message.AuthorId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Message>()
+            .HasMany(message => message.ParentReplies)
+            .WithMany(message => message.ChildReplies);
+
+        // Stations
 
         modelBuilder.Entity<Station>()
             .HasOne(station => station.Creator)
@@ -102,35 +154,5 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Station>()
             .HasMany(station => station.Members)
             .WithMany(user => user.JoinedStations);
-
-        modelBuilder.Entity<FeedInvite>()
-            .HasOne(feedInvite => feedInvite.Sender)
-            .WithMany()
-            .HasForeignKey(feedInvite => feedInvite.SenderId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<FeedInvite>()
-            .HasOne(feedInvite => feedInvite.Receiver)
-            .WithMany()
-            .HasForeignKey(feedInvite => feedInvite.ReceiverId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<Message>()
-            .HasOne(message => message.Author)
-            .WithMany()
-            .HasForeignKey(message => message.AuthorId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<StationInvite>()
-            .HasOne(stationInvite => stationInvite.Sender)
-            .WithMany()
-            .HasForeignKey(stationInvite => stationInvite.SenderId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<Channel>()
-            .HasOne(channel => channel.Creator)
-            .WithMany()
-            .HasForeignKey(channel => channel.CreatorId)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }
