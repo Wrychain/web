@@ -1,15 +1,15 @@
-using Wrychain.DAL.Entity.Channels;
+using Wrychain.DAL.Entity.Categories;
 using Wrychain.DAL.Entity.Users;
 
 namespace Wrychain.DAL.Entity.Stations;
 
-public class StationDefaultChannel: IEntity
+public class StationDefaultCategory: IEntity
 {
     // Main
     public int Id { get; set; }
     public required int SortIndex { get; set; }
     public required int StationId { get; set; }
-    public required int ChannelId { get; set; }
+    public required int CategoryId { get; set; }
 
     // Meta
     public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -17,5 +17,5 @@ public class StationDefaultChannel: IEntity
 
     // Navigation
     public Station? Station { get; set; }
-    public Channel? Channel { get; set; }
+    public Category? Category { get; set; }
 }
