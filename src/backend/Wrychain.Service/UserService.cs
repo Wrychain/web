@@ -78,7 +78,6 @@ public class UserService
         }
 
         // Create login attempt record
-        // TODO: Add more detail to LoginAttempt entity
         LoginAttempt newLoginAttempt = new LoginAttempt();
         user.LoginAttempts!.Add(newLoginAttempt);
         _userRepository.Update(user);
@@ -99,9 +98,6 @@ public class UserService
         {
             UserId = user.Id,
             Token = sessionToken,
-            // TODO: modify arguments or where this logic occurs to source:
-            // - IPAddress
-            // - UserAgent
             ExpiresAt = DateTime.Now.AddDays(30),
             IsActive = true
         };
