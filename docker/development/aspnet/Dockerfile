@@ -7,5 +7,6 @@ RUN apt upgrade -y
 
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
+RUN dotnet dev-certs https --trust
 
 ENTRYPOINT sleep infinity

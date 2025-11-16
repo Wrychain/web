@@ -78,7 +78,7 @@
     </div>
     <div class="row">
       <div class="col m-5">
-        <form @submit.prevent="onSubmit" class="d-grid input-group-lg">
+        <form @submit.prevent="registerSubmit" class="d-grid input-group-lg">
           <button
             :disabled="!formIsValid"
             id="register-button"
@@ -103,7 +103,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 
 const username = ref('')

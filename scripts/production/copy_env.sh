@@ -5,6 +5,7 @@ cp -n docker/production/adminer/.env docker/production/adminer/.env.local
 cp -n docker/production/aspnet/.env docker/production/aspnet/.env.local
 cp -n docker/production/mssql/.env docker/production/mssql/.env.local
 cp -n docker/production/vue/.env docker/production/vue/.env.local
+cp -n docker/production/vue/nginx.conf docker/production/vue/nginx.conf.local
 
 cp -n docker/production/nginx/wrychain-ssl.conf docker/production/nginx/wrychain-ssl.conf.local
 cp -n docker/production/nginx/wrychain.conf docker/production/nginx/wrychain.conf.local
