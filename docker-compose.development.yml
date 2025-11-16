@@ -85,6 +85,15 @@ services:
     networks:
       - wrychain_development
 
+  wrychain_gemini_development:
+    build:
+      context: ./
+      dockerfile: ./docker/development/gemini/Dockerfile
+    container_name: wrychain_gemini_development
+    image: wrychain_gemini_development
+    volumes:
+      - ./src:/wrychain
+
 networks:
 
   wrychain_development:
