@@ -85,6 +85,17 @@ services:
     networks:
       - wrychain_development
 
+  # wrychain_hey_development:
+  #   build:
+  #     context: ./
+  #     dockerfile: ./docker/development/hey/Dockerfile
+  #   container_name: wrychain_hey_development
+  #   depends_on:
+  #     - wrychain_hey_development
+  #   image: wrychain_hey_development
+  #   networks:
+  #     - wrychain_development
+
   wrychain_gemini_development:
     build:
       context: ./

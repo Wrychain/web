@@ -27,23 +27,9 @@ public class UserService
         _cache = cache;
     }
 
-    public bool Register(string username, string displayName, string password, string tokenHash)
+    // Creates a user record with the supplied data and assumes username and invite has already been vetted.
+    public void CreateUser(string username, string displayName, string password, PlatformInvite invite)
     {
-        // Validate user provided tokenHash
-        bool validationResult = _platformInviteService.ValidateToken(tokenHash);
-
-        // Bad token case
-        if (validationResult == false)
-        {
-            return false;
-        }
-
-        // Taken username case
-        if (_userRepository.FindOneBy(user => user.Username == username) != null)
-        {
-            return false;
-        }
-
         // Assemble and persist user
         byte[] salt = this.GenerateSalt();
         string passwordHash = this.HashPassword(salt, password);
@@ -56,64 +42,65 @@ public class UserService
         _userRepository.Add(user);
         _userRepository.Save();
 
-        // TODO: Prevent querying the invite a second time in the future
-        // Inactivate invite and attach created user's id
-        PlatformInvite invite = _platformInviteRepository.FindOneBy(invite => invite.TokenHash == tokenHash)!;
+        // Update invite by attaching user ID and setting it as inactive
         invite.ReceiverId = user.Id;
         invite.IsActive = false;
         _platformInviteRepository.Save();
-
-        return true;
     }
 
-    public bool Login(string username, string password)
+    public PlatformInvite? GetPlatformInvite(string token)
+    {
+        return _platformInviteRepository.FindOneBy(invite => invite.TokenHash == token);
+    }
+
+    public void SetPlatformInviteAsInActive(PlatformInvite invite)
+    {
+        invite.IsActive = false;
+        _platformInviteRepository.Update(invite);
+        _platformInviteRepository.Save();
+    }
+
+    public User? GetUser(string username)
     {
         // Lookup user by username and obtain stored passwordHash
         User? user = _userRepository.FindOneBy(user => user.Username == username);
+        return user;
+    }
 
-        // User not found case
-        if (user == null)
-        {
-            return false;
-        }
-
+    public void AddLoginAttempt(User? user, string remoteIPAddress, string userAgent)
+    {
         // Create login attempt record
         LoginAttempt newLoginAttempt = new LoginAttempt();
-        user.LoginAttempts!.Add(newLoginAttempt);
+        newLoginAttempt.IPAddress = remoteIPAddress;
+        newLoginAttempt.UserAgent = userAgent;
+
+        // Initialize LoginAttempts property
+        // - This might be changed in the future.
+        // - Currently LoginAttempts is null because it is not included in the GetUser query nor initialized by the entity.
+        // - This does seem to add a login attempt record as expected and not nuke the other records.
+        user.LoginAttempts = [];
+        user.LoginAttempts.Add(newLoginAttempt);
         _userRepository.Update(user);
         _userRepository.Save();
+    }
 
-        // Validate provided password against stored passwordHash
-        bool passwordsMatch = this.ValidatePassword(password, user.PasswordHash);
-
-        // Passwords do not match case
-        if (passwordsMatch == false) 
-        {
-            return false;
-        }
-
+    public LoginSession AddLoginSession(User user, string remoteIPAddress, string userAgent)
+    {
         // Create login session
         string sessionToken = this.GenerateSessionToken();
         LoginSession newLoginSession = new LoginSession()
         {
             UserId = user.Id,
             Token = sessionToken,
+            IPAddress = remoteIPAddress,
+            UserAgent = userAgent,
             ExpiresAt = DateTime.Now.AddDays(30),
             IsActive = true
         };
         _loginSessionRepository.Add(newLoginSession);
         _loginSessionRepository.Save();
 
-        // Set session token in cache
-        var session = new
-        {
-            UserId = user.Id,
-            LoginSessionId = newLoginSession.Id,
-            ExpiresAt = newLoginSession.ExpiresAt
-        };
-        _cache.SetString(sessionToken, JsonSerializer.Serialize(session));
-
-        return true;
+        return newLoginSession;
     }
 
     public bool ValidateSessionToken(string sessionToken)
@@ -132,6 +119,10 @@ public class UserService
 
         if (loginSession.ExpiresAt < DateTime.Now)
         {
+            // Set the session token as inactive, as it has expired.
+            loginSession.IsActive = false;
+            _loginSessionRepository.Update(loginSession);
+            _loginSessionRepository.Save();
             return false;
         }
 
