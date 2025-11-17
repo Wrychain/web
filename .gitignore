@@ -2,6 +2,7 @@ docker/**/mssql/data/*
 docker/**/redis/data/*
 bin/
 obj/
+cookies.txt
 *.local
 *.log
 !.gitkeep
