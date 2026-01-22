@@ -8,6 +8,7 @@ public class Notification: IEntity
     public int Id { get; set; }
     public required string Title { get; set; }
     public required string Body { get; set; }
+    public required int UserId { get; set; }
     public int? IconId { get; set; }
     public int? BadgeId { get; set; }
     public int? ImageId { get; set; }
@@ -23,6 +24,7 @@ public class Notification: IEntity
     public bool IsActive { get; set; } = true;
 
     // Navigation
+    public User? User { get; set; }
     public FilePointer? Icon { get; set; }
     public FilePointer? Badge { get; set; }
     public FilePointer? Image { get; set; }

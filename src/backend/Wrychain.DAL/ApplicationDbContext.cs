@@ -154,5 +154,11 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Station>()
             .HasMany(station => station.Members)
             .WithMany(user => user.JoinedStations);
+
+        // Users
+
+        modelBuilder.Entity<User>()
+            .HasIndex(user => user.Username)
+            .IsUnique();
     }
 }

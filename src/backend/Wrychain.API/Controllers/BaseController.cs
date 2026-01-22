@@ -18,50 +18,50 @@ where TEntity : class, IEntity
     }
 
     [HttpGet]
-    public virtual IEnumerable<TEntity> Index()
+    public virtual IActionResult Index()
     {
-        return _repository.FindAll();
+        return new JsonResult(_repository.FindAll());
     }
 
     [HttpGet("{id}")]
-    public virtual TEntity? Show(int id)
+    public virtual IActionResult Show(int id)
     {
-        return _repository.FindOneBy(e => e.Id == id);
+        return new JsonResult(_repository.FindOneBy(e => e.Id == id));
     }
 
     [HttpPost]
-    public virtual int? Create([FromBody] TEntity newEntity)
+    public virtual IActionResult Create([FromBody] TEntity newEntity)
     {
         _repository.Add(newEntity);
         _repository.Save();
-        return newEntity.Id;
+        return new JsonResult(newEntity.Id);
     }
 
     [HttpPut("{id}")]
-    public virtual bool Update(int id, [FromBody] TEntity updatedEntity)
+    public virtual IActionResult Update(int id, [FromBody] TEntity updatedEntity)
     {
         var existing = _repository.FindOneBy(e => e.Id == id);
         if (existing == null)
         {
-            return false;
+            return new JsonResult(false);
         }
 
         _repository.Update(updatedEntity);
         _repository.Save();
-        return true;
+        return new JsonResult(true);
     }
 
     [HttpDelete("{id}")]
-    public virtual bool Delete(int id)
+    public virtual IActionResult Delete(int id)
     {
         var existing = _repository.FindOneBy(e => e.Id == id);
         if (existing == null)
         {
-            return false;
+            return new JsonResult(false);
         }
 
         _repository.Delete(existing);
         _repository.Save();
-        return true;
+        return new JsonResult(true);
     }
 }
