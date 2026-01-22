@@ -10,9 +10,10 @@ public class BaseAuthController<TRepo, TEntity> : BaseController<TRepo, TEntity>
 where TRepo : IRepository<TEntity>
 where TEntity : class, IEntity
 {
-    private readonly UserService _userService;
+    protected UserService _userService;
 
-    public BaseAuthController(UserService userService)
+    public BaseAuthController(TRepo repository, UserService userService)
+    : base(repository)
     {
         _userService = userService;
     }
@@ -35,7 +36,7 @@ where TEntity : class, IEntity
     }
 
     [HttpGet]
-    public virtual IActionResult Index()
+    public override IActionResult Index()
     {
         if (!UserIsAuthenticated())
         {
@@ -46,7 +47,7 @@ where TEntity : class, IEntity
     }
 
     [HttpGet("{id}")]
-    public virtual IActionResult Show(int id)
+    public override IActionResult Show(int id)
     {
         if (!UserIsAuthenticated())
         {
@@ -57,7 +58,7 @@ where TEntity : class, IEntity
     }
 
     [HttpPost]
-    public virtual IActionResult Create([FromBody] TEntity newEntity)
+    public override IActionResult Create([FromBody] TEntity newEntity)
     {
         if (!UserIsAuthenticated())
         {
@@ -68,7 +69,7 @@ where TEntity : class, IEntity
     }
 
     [HttpPut("{id}")]
-    public virtual IActionResult Update(int id, [FromBody] TEntity updatedEntity)
+    public override IActionResult Update(int id, [FromBody] TEntity updatedEntity)
     {
         if (!UserIsAuthenticated())
         {
@@ -79,7 +80,7 @@ where TEntity : class, IEntity
     }
 
     [HttpDelete("{id}")]
-    public virtual IActionResult Delete(int id)
+    public override IActionResult Delete(int id)
     {
         if (!UserIsAuthenticated())
         {
