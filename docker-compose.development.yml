@@ -59,6 +59,19 @@ services:
     networks:
       - wrychain_development
 
+  wrychain_python_development:
+    build:
+      context: ./
+      dockerfile: ./docker/development/python/Dockerfile
+    container_name: wrychain_python_development
+    image: wrychain_python_development
+    volumes:
+      - ./src/python:/wrychain/python
+      - ./src/backend:/wrychain/backend
+      - ./docs:/wrychain/docs
+    networks:
+      - wrychain_development
+
   wrychain_redis_development:
     build:
       context: ./
