@@ -3,7 +3,6 @@ using Wrychain.DAL.Entity.Users;
 
 namespace Wrychain.DAL.Entity.Stations;
 
-// StationUserCategory is created after Category to link via Station::UserCategories
 public class StationUserCategory: IEntity
 {
     // Main

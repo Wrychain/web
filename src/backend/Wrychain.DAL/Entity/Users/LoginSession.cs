@@ -1,7 +1,5 @@
 namespace Wrychain.DAL.Entity.Users;
 
-// Created when an email/2FA token is sent/expected from user.
-// IsActive updated with successful TokenHash validation.
 public class LoginSession: IEntity
 {
     // Main

@@ -3,7 +3,6 @@ using Wrychain.DAL.Entity.Channels;
 
 namespace Wrychain.DAL.Entity.Categories;
 
-// One to one join between Category and Channel w/ SortIndex
 public class CategoryChannel: IEntity
 {
     // Main

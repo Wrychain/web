@@ -2,7 +2,6 @@ using Wrychain.DAL.Entity.Channels;
 
 namespace Wrychain.DAL.Entity.Stations;
 
-// Join entity to enable Station::GlobalChannels
 public class StationChannel
 {
     // Main

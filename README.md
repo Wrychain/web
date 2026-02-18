@@ -2,4 +2,4 @@
 
 ![splash-image](./docs/assets/concept-icon.png)
 
-<blockquote align="center">"Trust is your social network"</blockquote>
+> "Trust is your social network"
