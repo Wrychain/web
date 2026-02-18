@@ -85,16 +85,22 @@ for scope in DATA:
                 print(f"Cyclic reference found for {file}")
                 print(f"\tReference: {reference}")
 
-# Print the data.
-for scope in DATA:
-    debug("=" * 75)
-    debug(f"Scope: {scope}")
-    debug("=" * 75)
-    debug()
-    for file in DATA[scope]:
-        debug(f"-\tFile: {file}")
-        debug()
-        debug(f"\t\tPath: {DATA[scope][file]["path"]}")
-        # debug(f"\t\tWords: {DATA[scope][file]["words"]}")
-        debug(f"\t\tReferences: {DATA[scope][file]["references"]}")
-        debug()
+# Write the data to docs/entity-plan.md
+OUTPUT_FILE = "/wrychain/docs/entity-plan.md"
+
+with open(OUTPUT_FILE, "w") as f:
+    for scope in DATA:
+        f.write(f"# Scope: {scope}")
+        f.write("\n")
+        for file in DATA[scope]:
+            f.write(f"> **File:** {file}")
+            f.write("\n")
+            f.write("\n")
+            f.write(f"**Path:** {DATA[scope][file]["path"]}")
+            f.write("\n")
+            f.write("\n")
+            # f.write(f"\t\tWords: {DATA[scope][file]["words"]}")
+            # f.write("\n")
+            f.write(f"**References:** {DATA[scope][file]["references"]}")
+            f.write("\n")
+            f.write("\n")
