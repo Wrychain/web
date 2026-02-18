@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Wrychain.API.Controllers;
 
 [ApiController]
-[Route("api/")]
+[Route("api/auth/")]
 public class AuthController : ControllerBase
 {
     private readonly UserService _userService;
