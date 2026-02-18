@@ -3,7 +3,7 @@
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Categories/Category.cs
 
-**References:** ['Wrychain.DAL.Entity.Categories.CategoryChannel', 'Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Users.User']
+**References:** ['Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Categories.CategoryChannel', 'Wrychain.DAL.Entity.Users.User']
 
 > **File:** CategoryChannel.cs
 
@@ -16,19 +16,19 @@
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Channels/Channel.cs
 
-**References:** ['Wrychain.DAL.Entity.Channels.Progress', 'Wrychain.DAL.Entity.Channels.ChannelWriter', 'Wrychain.DAL.Entity.Channels.ChannelReader', 'Wrychain.DAL.Entity.Users.User', 'Wrychain.DAL.Entity.Channels.Presence']
+**References:** ['Wrychain.DAL.Entity.Channels.ChannelWriter', 'Wrychain.DAL.Entity.Channels.Progress', 'Wrychain.DAL.Entity.Channels.ChannelReader', 'Wrychain.DAL.Entity.Channels.Presence', 'Wrychain.DAL.Entity.Users.User']
 
 > **File:** ChannelReader.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Channels/ChannelReader.cs
 
-**References:** ['Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Channels.Channel', 'Wrychain.DAL.Entity.Users.User']
+**References:** ['Wrychain.DAL.Entity.Channels.Channel', 'Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Users.User']
 
 > **File:** ChannelWriter.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Channels/ChannelWriter.cs
 
-**References:** ['Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Channels.Channel', 'Wrychain.DAL.Entity.Users.User']
+**References:** ['Wrychain.DAL.Entity.Channels.Channel', 'Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Users.User']
 
 > **File:** Presence.cs
 
@@ -40,7 +40,7 @@
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Channels/Progress.cs
 
-**References:** ['Wrychain.DAL.Entity.Messages.Message', 'Wrychain.DAL.Entity.Users.User', 'Wrychain.DAL.Entity.Channels.Channel']
+**References:** ['Wrychain.DAL.Entity.Channels.Channel', 'Wrychain.DAL.Entity.Messages.Message', 'Wrychain.DAL.Entity.Users.User']
 
 # Scope: Wrychain.DAL.Entity.Files
 > **File:** FilePointer.cs
@@ -79,13 +79,13 @@
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Messages/Attachment.cs
 
-**References:** ['Wrychain.DAL.Entity.Files.FilePointer', 'Wrychain.DAL.Entity.Messages.Message', 'Wrychain.DAL.Entity.Users.User']
+**References:** ['Wrychain.DAL.Entity.Messages.Message', 'Wrychain.DAL.Entity.Users.User', 'Wrychain.DAL.Entity.Files.FilePointer']
 
 > **File:** Message.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Messages/Message.cs
 
-**References:** ['Wrychain.DAL.Entity.Messages.Receipt', 'Wrychain.DAL.Entity.Users.User', 'Wrychain.DAL.Entity.Messages.Attachment', 'Wrychain.DAL.Entity.Messages.Reaction']
+**References:** ['Wrychain.DAL.Entity.Messages.Attachment', 'Wrychain.DAL.Entity.Messages.Receipt', 'Wrychain.DAL.Entity.Messages.Reaction', 'Wrychain.DAL.Entity.Users.User']
 
 > **File:** Reaction.cs
 
@@ -99,24 +99,43 @@
 
 **References:** ['Wrychain.DAL.Entity.Messages.Message', 'Wrychain.DAL.Entity.Users.User']
 
+# Scope: Wrychain.DAL.Entity.Meta
+> **File:** Session.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Meta/Session.cs
+
+**References:** []
+
+> **File:** VAPID.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Meta/VAPID.cs
+
+**References:** []
+
 # Scope: Wrychain.DAL.Entity.Stations
 > **File:** Station.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Stations/Station.cs
 
-**References:** ['Wrychain.DAL.Entity.Stations.StationChannel', 'Wrychain.DAL.Entity.Invites.StationInvite', 'Wrychain.DAL.Entity.Stations.StationUserSetting', 'Wrychain.DAL.Entity.Users.User', 'Wrychain.DAL.Entity.Stations.StationDefaultCategory', 'Wrychain.DAL.Entity.Stations.StationUserCategory']
+**References:** ['Wrychain.DAL.Entity.Invites.StationInvite', 'Wrychain.DAL.Entity.Stations.StationUserCategory', 'Wrychain.DAL.Entity.Stations.StationUserSetting', 'Wrychain.DAL.Entity.Stations.StationDefaultCategory', 'Wrychain.DAL.Entity.Stations.StationChannel', 'Wrychain.DAL.Entity.Users.User']
 
 > **File:** StationChannel.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Stations/StationChannel.cs
 
-**References:** ['Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Channels.Channel']
+**References:** ['Wrychain.DAL.Entity.Channels.Channel', 'Wrychain.DAL.Entity.Stations.Station']
 
 > **File:** StationDefaultCategory.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Stations/StationDefaultCategory.cs
 
 **References:** ['Wrychain.DAL.Entity.Categories.Category', 'Wrychain.DAL.Entity.Stations.Station']
+
+> **File:** StationReader.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Stations/StationReader.cs
+
+**References:** []
 
 > **File:** StationUserCategory.cs
 
@@ -130,7 +149,31 @@
 
 **References:** ['Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Users.User']
 
+> **File:** StationWriter.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Stations/StationWriter.cs
+
+**References:** []
+
 # Scope: Wrychain.DAL.Entity.Users
+> **File:** Block.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Users/Block.cs
+
+**References:** []
+
+> **File:** Connection.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Users/Connection.cs
+
+**References:** ['Wrychain.DAL.Entity.Users.User']
+
+> **File:** ConnectionRequest.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Users/ConnectionRequest.cs
+
+**References:** []
+
 > **File:** LoginAttempt.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Users/LoginAttempt.cs
@@ -149,17 +192,17 @@
 
 **References:** ['Wrychain.DAL.Entity.Files.FilePointer', 'Wrychain.DAL.Entity.Users.User']
 
+> **File:** Report.cs
+
+**Path:** /wrychain/backend/Wrychain.DAL/Entity/Users/Report.cs
+
+**References:** []
+
 > **File:** User.cs
 
 **Path:** /wrychain/backend/Wrychain.DAL/Entity/Users/User.cs
 
-**References:** ['Wrychain.DAL.Entity.Users.LoginSession', 'Wrychain.DAL.Entity.Users.LoginAttempt', 'Wrychain.DAL.Entity.Users.Notification', 'Wrychain.DAL.Entity.Users.UserConnection', 'Wrychain.DAL.Entity.Files.FilePointer', 'Wrychain.DAL.Entity.Users.UserVAPID', 'Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Channels.Channel']
-
-> **File:** UserConnection.cs
-
-**Path:** /wrychain/backend/Wrychain.DAL/Entity/Users/UserConnection.cs
-
-**References:** ['Wrychain.DAL.Entity.Users.User']
+**References:** ['Wrychain.DAL.Entity.Channels.Channel', 'Wrychain.DAL.Entity.Users.LoginSession', 'Wrychain.DAL.Entity.Files.FilePointer', 'Wrychain.DAL.Entity.Stations.Station', 'Wrychain.DAL.Entity.Users.Connection', 'Wrychain.DAL.Entity.Users.LoginAttempt', 'Wrychain.DAL.Entity.Users.Notification', 'Wrychain.DAL.Entity.Users.UserVAPID']
 
 > **File:** UserVAPID.cs
 

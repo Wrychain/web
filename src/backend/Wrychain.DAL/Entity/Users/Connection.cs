@@ -2,7 +2,7 @@ using Wrychain.DAL.Enum;
 
 namespace Wrychain.DAL.Entity.Users;
 
-public class UserConnection: IEntity
+public class Connection: IEntity
 {
     // Main
     public int Id { get; set; }

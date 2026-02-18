@@ -22,7 +22,7 @@ public class User: IEntity
     public FilePointer? Avatar { get; set; }
     public FilePointer? Banner { get; set; }
     public List<LoginAttempt>? LoginAttempts { get; set; }
-    public List<UserConnection>? Friends { get; set; }
+    public List<Connection>? Friends { get; set; }
     public List<Notification>? Notifications { get; set; }
     public List<LoginSession>? LoginSessions { get; set; }
     public List<UserVAPID>? VapidSessions { get; set; }
