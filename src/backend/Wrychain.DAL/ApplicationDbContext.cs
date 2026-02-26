@@ -54,7 +54,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<LoginSession> LoginSession { get; set; }
     public DbSet<Notification> Notification { get; set; }
     public DbSet<User> User { get; set; }
-    public DbSet<UserConnection> UserConnection { get; set; }
+    public DbSet<Connection> Connection { get; set; }
     public DbSet<UserVAPID> UserVAPID { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -154,5 +154,11 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Station>()
             .HasMany(station => station.Members)
             .WithMany(user => user.JoinedStations);
+
+        // Users
+
+        modelBuilder.Entity<User>()
+            .HasIndex(user => user.Username)
+            .IsUnique();
     }
 }

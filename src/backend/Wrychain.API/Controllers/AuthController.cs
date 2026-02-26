@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Wrychain.API.Controllers;
 
 [ApiController]
-[Route("api/")]
+[Route("api/auth/")]
 public class AuthController : ControllerBase
 {
     private readonly UserService _userService;
@@ -20,18 +20,36 @@ public class AuthController : ControllerBase
         _userService = userService;
     }
 
+    private bool UserIsAuthenticated()
+    {
+        string? token = HttpContext.Session.GetString("token");
+
+        if (token != null)
+        {
+            bool isTokenValid = _userService.ValidateSessionToken(token);
+
+            if (isTokenValid)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    [HttpGet("check")]
+    public IActionResult Check()
+    {
+        return new JsonResult(new { authenticated = this.UserIsAuthenticated() });
+    }
+
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
         // Prevent needless login checks by first checking if session token is populated and valid.
-        string? token = HttpContext.Session.GetString("token");
-        if (token != null)
+        if(this.UserIsAuthenticated())
         {
-            bool isTokenValid = _userService.ValidateSessionToken(token);
-            if (isTokenValid)
-            {
-                return this.Content("{\"skip\": true}", "application/json");
-            }
+            return new JsonResult(new { authenticated = true, valid = false });
         }
 
         // Extract username, password, forwarded IP, and browser's declared user agent.
@@ -47,7 +65,7 @@ public class AuthController : ControllerBase
         // No user found with that username case.
         if (user == null)
         {
-            return this.Content("{\"valid\": false}", "application/json");
+            return new JsonResult(new { valid = false });
         }
 
         // A user was found. Add a login attempt record.
@@ -57,28 +75,23 @@ public class AuthController : ControllerBase
         bool passwordValid = _userService.ValidatePassword(password, user.PasswordHash);
         if (passwordValid == false)
         {
-            return this.Content("{\"valid\": false}", "application/json");
+            return new JsonResult(new { valid = false });
         }
 
         // Supplied password was correct. Add and register a login session record.
         LoginSession newLoginSession = _userService.AddLoginSession(user, remoteIPAddress, userAgent);
         HttpContext.Session.SetString("token", newLoginSession.Token);
 
-        return this.Content("{\"valid\": true}", "application/json");
+        return new JsonResult(new { authenticated = true, valid = true });
     }
 
     [HttpPost("register")]
     public IActionResult Register([FromBody] RegisterRequest request)
     {
         // Prevent needless login checks by first checking if session token is populated and valid.
-        string? token = HttpContext.Session.GetString("token");
-        if (token != null)
+        if(this.UserIsAuthenticated())
         {
-            bool isTokenValid = _userService.ValidateSessionToken(token);
-            if (isTokenValid)
-            {
-                return this.Content("{\"skip\": true}", "application/json");
-            }
+            return new JsonResult(new { authenticated = true, valid = false });
         }
 
         // Extract username, display name, password, confirm password, token, forwarded IP, and browser's declared user agent.
@@ -97,14 +110,14 @@ public class AuthController : ControllerBase
         // Validate passwords match.
         if (password != confirmPassword)
         {
-            return this.Content("{\"valid\": false}", "application/json");
+            return new JsonResult(new { valid = false });
         }
 
         // Validate the username is not already taken.
         User? user = _userService.GetUser(username);
         if (user != null)
         {
-            return this.Content("{\"valid\": false}", "application/json");
+            return new JsonResult(new { valid = false });
         }
 
         // Get platform invite by value and validate.
@@ -113,13 +126,13 @@ public class AuthController : ControllerBase
         // Invite does not exist case.
         if (invite == null)
         {
-            return this.Content("{\"valid\": false}", "application/json");
+            return new JsonResult(new { valid = false });
         }
 
         // Invite is not active case.
         if(invite.IsActive == false)
         {
-            return this.Content("{\"valid\": false}", "application/json");
+            return new JsonResult(new { valid = false });
         }
 
         // Invite is expired case.
@@ -127,12 +140,12 @@ public class AuthController : ControllerBase
         {
             // Mark token as expired, as it is currently active.
             _userService.SetPlatformInviteAsInActive(invite);
-            return this.Content("{\"valid\": false}", "application/json");
+            return new JsonResult(new { valid = false });
         }
 
         // Validation passed, invoke CreateUser method
         _userService.CreateUser(username, displayName, password, invite);
 
-        return this.Content("{\"valid\": true}", "application/json");
+        return new JsonResult(new { valid = true });
     }
 }

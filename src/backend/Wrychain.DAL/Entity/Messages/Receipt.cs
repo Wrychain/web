@@ -2,7 +2,6 @@ using Wrychain.DAL.Entity.Users;
 
 namespace Wrychain.DAL.Entity.Messages;
 
-// User views an existing message, creates this receipt, and adds it to the message context
 public class Receipt: IEntity
 {
     // Main

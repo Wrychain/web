@@ -3,7 +3,6 @@ using Wrychain.DAL.Entity.Users;
 
 namespace Wrychain.DAL.Entity.Messages;
 
-// Attachment is created, added to a new Message, Message is created
 public class Attachment: IEntity
 {
     // Main
